@@ -4,10 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.util.HashMap;
 
-public class GameCore {
+abstract public class GameCore {
     GraphicsContext gc;
     double WIDTH, HEIGHT;
-    private HashMap<String, Boolean> currentlyActiveKeys;
+    protected HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
 
     public GameCore(GraphicsContext gc, double width, double height) {
         this.gc = gc;
@@ -17,7 +17,7 @@ public class GameCore {
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
         this.currentlyActiveKeys = keys;
-        System.out.println(keys);
+//        System.out.println(keys);
 
     }
 
@@ -25,6 +25,14 @@ public class GameCore {
 //        System.out.println(elapsedTime);
 //        System.out.println(1*elapsedTime);
     }
+
+    public void setDimensions(double width, double height){
+        this.WIDTH = width;
+        this.HEIGHT = height;
+        onResize();
+    }
+
+    abstract void onResize();
 
 
 }

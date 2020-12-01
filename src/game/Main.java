@@ -22,6 +22,7 @@ public class Main extends Application {
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
+    GameCore game;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,12 +31,10 @@ public class Main extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(canvas);
 
-
         // Bind canvas size to stack pane size.
         canvas.widthProperty().bind(root.widthProperty());
         canvas.heightProperty().bind(root.heightProperty());
         primaryStage.setScene(new Scene(root));
-        resizeListener(canvas);
 
         //Ready
         primaryStage.show();
@@ -44,7 +43,7 @@ public class Main extends Application {
         System.out.println(canvas.getWidth());
 
         //Game
-        Invasion game = new Invasion(gc, WIDTH, HEIGHT);
+        game = new Invasion(gc, WIDTH, HEIGHT);
 
 
         //timeline and fps
@@ -55,12 +54,15 @@ public class Main extends Application {
         animation.getKeyFrames().add(frame);
         animation.play();
 
-        //keypress
-        keyListener(primaryStage, game);
+        //Listeners
+        keyListener(primaryStage);
+        resizeListener(canvas);
+
+        game.setDimensions(WIDTH, HEIGHT);
 
     }
 
-    public void keyListener(Stage primaryStage, GameCore game) {
+    public void keyListener(Stage primaryStage) {
         primaryStage.getScene().setOnKeyPressed(event -> {
             String codeString = event.getCode().toString();
             if (!currentlyActiveKeys.containsKey(codeString)) {
@@ -80,10 +82,12 @@ public class Main extends Application {
         canvas.widthProperty().addListener((obs, oldVal, newVal) -> {
             WIDTH = (double) newVal;
             System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
+            game.setDimensions(WIDTH, HEIGHT);
         });
         canvas.heightProperty().addListener((obs, oldVal, newVal) -> {
             HEIGHT = (double) newVal;
             System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
+            game.setDimensions(WIDTH, HEIGHT);
         });
         WIDTH = canvas.getWidth();
         HEIGHT = canvas.getHeight();

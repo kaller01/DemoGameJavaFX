@@ -1,4 +1,4 @@
 package game;
 
-public class Speedo extends Player {
-}
+//public class Speedo extends Player {
+//}
