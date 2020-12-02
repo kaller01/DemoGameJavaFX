@@ -3,58 +3,76 @@ package game;
 import javafx.scene.canvas.GraphicsContext;
 
 
-
 abstract public class Entity {
     double x, y, vx, vy, ax, ay, vMax, size;
     public Double[] border = new Double[4];
-    GraphicsContext gc;
+    protected static GraphicsContext gc;
 
-    public Entity(GraphicsContext gc){
-        this.gc = gc;
+    public Entity() {
     }
 
     abstract void draw();
 
-    public void move(){
+    public void move() {
 
     }
 
-    public void update(double deltaTime){
-        double vx = this.vx + ax*deltaTime;
-        double vy = this.vy + ay*deltaTime;
+    public static void setGraphicsContext(GraphicsContext graphicsContext) {
+        gc = graphicsContext;
+    }
+
+    public void update(double deltaTime) {
+        double vx = this.vx + ax * deltaTime;
+        double vy = this.vy + ay * deltaTime;
 
         //Limit velocity
-        if(Math.abs(vx)<vMax){
+        if (Math.abs(vx) < vMax) {
             this.vx = vx;
         }
-        if(Math.abs(vy)<vMax){
+        if (Math.abs(vy) < vMax) {
             this.vy = vy;
         }
 
-        //Friction
-        if(ax == 0){
-            this.vx*=0.95;
-        }
-        if(ay == 0){
-            this.vy*=0.95;
-        }
+        double x = this.x + vx * deltaTime;
+        double y = this.y + vy * deltaTime;
 
-        //Keep inside
-        double x = this.x + vx*deltaTime;
-        double y = this.y + vy*deltaTime;
-
-        if(x<border[2]-size && x>border[0]) this.x = x;
-        else this.vx = -this.vx;
-        if(y<border[3]-size && y>border[1]) this.y = y;
-        else this.vy = -this.vy;
+        setX(x);
+        setY(y);
     }
 
-    public void setBorder(double xTop,double yTop,double xBottom,double yBottom){
+    public boolean isInsideBorderX(double x) {
+        return (x <= border[2] - size && x >= border[0]);
+    }
+
+    protected boolean isInsideBorderY(double y) {
+        return (y < border[3] - size && y > border[1]);
+    }
+
+    public void setBorder(double xTop, double yTop, double xBottom, double yBottom) {
         border[0] = xTop;
         border[1] = yTop;
         border[2] = xBottom;
         border[3] = yBottom;
     }
 
+    protected void setX(double x) {
+        this.x = x;
+    }
+
+    protected void setY(double y) {
+        this.y = y;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public double getX(){
+        return x+size/2;
+    }
+
+    public double getY(){
+        return y+size/2;
+    }
 
 }

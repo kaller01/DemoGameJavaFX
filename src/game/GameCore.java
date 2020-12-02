@@ -17,7 +17,6 @@ abstract public class GameCore {
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
         this.currentlyActiveKeys = keys;
-//        System.out.println(keys);
 
     }
 
