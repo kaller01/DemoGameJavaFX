@@ -8,11 +8,15 @@ public class GameCore {
     GraphicsContext gc;
     double WIDTH, HEIGHT;
     private HashMap<String, Boolean> currentlyActiveKeys;
+    Level level;
+
 
     public GameCore(GraphicsContext gc, double width, double height) {
         this.gc = gc;
         this.WIDTH = width;
         this.HEIGHT = height;
+        level =new Level(gc, WIDTH, HEIGHT);
+        level.draw(gc);
     }
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {

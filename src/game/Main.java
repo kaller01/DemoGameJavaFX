@@ -25,6 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("BAMK Game");
         ResizableCanvas canvas = new ResizableCanvas();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         StackPane root = new StackPane();
@@ -93,4 +94,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
 }
