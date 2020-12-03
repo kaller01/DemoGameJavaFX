@@ -43,7 +43,7 @@ public class Main extends Application {
         System.out.println(canvas.getWidth());
 
         //Game
-        game = new Invasion(gc, WIDTH, HEIGHT);
+        game = new Dual(gc, WIDTH, HEIGHT);
 
 
         //timeline and fps

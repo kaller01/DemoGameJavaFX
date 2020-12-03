@@ -9,20 +9,21 @@ public class Player extends Entity {
     protected HashMap<String, String> keySchema = new HashMap<>();
     protected double acceleration = 1000;
     protected double projectileVx = 500;
-    protected static EntityManager entityManager;
     protected double recharge = 0.5;
     protected double cooldown = 0;
+    protected int number;
 
 
-    Player(int player) {
+    Player(int number) {
         super();
         vMax = 300;
         size = 30;
 
         //References the same memory. Should work because it isn't a copy
-        this.entityManager = entityManager;
+        this.number = number;
+        entityManager.addPlayer(this);
 
-        switch (player) {
+        switch (number) {
             case 1:
                 keySchema.put("UP", "W");
                 keySchema.put("DOWN", "S");
@@ -42,16 +43,21 @@ public class Player extends Entity {
                 x = 1000;
                 y = 100;
                 break;
-
         }
 
 
+    }
+
+    public int getNumber(){
+        return number;
     }
 
     @Override
     public void draw() {
         gc.setFill(Color.BLACK);
         gc.fillRect(x, y, size, size);
+        gc.setFill(Color.RED);
+        gc.fillRect(getX(),getY(),1,1);
     }
 
     public void move(HashMap<String, Boolean> currentlyActiveKeys) {
@@ -81,8 +87,8 @@ public class Player extends Entity {
         super.update(deltaTime);
 
         //Friction
-        this.vx *= 0.95;
-        this.vy *= 0.95;
+        this.vx *= 0.97;
+        this.vy *= 0.97;
 
         this.updateCooldown(deltaTime);
     }
@@ -102,8 +108,7 @@ public class Player extends Entity {
             double xComp;
             if(projectileVx>0) xComp = size*1.5;
             else xComp = -size;
-            Projectile projectile = new Projectile(x+xComp, y, projectileVx + vx, vy);
-            entityManager.addProjectile(projectile);
+            new Projectile(x+xComp, y, projectileVx + vx, vy);
             cooldown = recharge;
         }
     }

@@ -8,11 +8,15 @@ abstract public class GameCore {
     GraphicsContext gc;
     double WIDTH, HEIGHT;
     protected HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
+    EntityManager entityManager = new EntityManager();
+
 
     public GameCore(GraphicsContext gc, double width, double height) {
         this.gc = gc;
         this.WIDTH = width;
         this.HEIGHT = height;
+        Entity.setGraphicsContext(gc);
+        Entity.setEntityManager(entityManager);
     }
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
