@@ -15,8 +15,6 @@ abstract public class GameCore {
         this.gc = gc;
         this.WIDTH = width;
         this.HEIGHT = height;
-        level = new Level(gc, WIDTH, HEIGHT);
-        level.draw(gc);
     }
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
