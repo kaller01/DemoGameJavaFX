@@ -17,9 +17,7 @@ public class Dual extends GameCore {
     }
 
     public void update(double elapsedTime) {
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0, 0, WIDTH, HEIGHT);
-
+        super.update(elapsedTime);
 //        player1.move(currentlyActiveKeys);
 //        player2.move(currentlyActiveKeys);
 
@@ -32,6 +30,7 @@ public class Dual extends GameCore {
     public void onResize() {
         player1.setBorder(0, 0, WIDTH/2, HEIGHT);
         player2.setBorder(WIDTH/2, 0, WIDTH, HEIGHT);
+        level.onResize(WIDTH,HEIGHT);
     }
 
 

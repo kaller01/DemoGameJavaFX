@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public enum Level {
 
-    dual("duol");
+    dual("dual");
 
     String mood;
     static GraphicsContext gc;
@@ -16,9 +16,9 @@ public enum Level {
 
     /**
      *
-     * @param Mood
+     * @param mood
      */
-    Level(String Mood) {
+    Level(String mood) {
         this.mood= mood;
     }
 
@@ -50,7 +50,7 @@ public enum Level {
 
         //The line in the middle
         gc.setFill(Color.BLACK);
-        gc.fillRect(WIDTH * 0.5, 0, WIDTH * 0.009, HEIGHT);
+        gc.fillRect(WIDTH * 0.495, 0, WIDTH * 0.01, HEIGHT);
 
         //The line at the bottom
         gc.setFill(Color.BLACK);
@@ -61,8 +61,8 @@ public enum Level {
 
     }
 
-    public void setGc(GraphicsContext gc) {
-        this.gc = gc;
+    public static void setGc(GraphicsContext gcTmp) {
+        gc = gcTmp;
     }
 
     public void onResize(double width, double height) {

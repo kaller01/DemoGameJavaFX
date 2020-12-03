@@ -16,10 +16,12 @@ abstract public class GameCore {
         this.gc = gc;
         this.WIDTH = width;
         this.HEIGHT = height;
-        level = new Level(gc, WIDTH, HEIGHT);
-        level.draw(gc);
         Entity.setGraphicsContext(gc);
         Entity.setEntityManager(entityManager);
+        Level.setGc(gc);
+        level = Level.dual;
+
+
     }
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
@@ -29,6 +31,8 @@ abstract public class GameCore {
     }
 
     public void update(double elapsedTime) {
+        level.draw();
+
         // System.out.println(elapsedTime);
         // System.out.println(1*elapsedTime);
     }
