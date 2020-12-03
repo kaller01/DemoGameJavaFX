@@ -10,6 +10,14 @@ public class Invasion extends GameCore {
         super(gc, width, height);
         Level.gc= gc;
         level = Level.dual;
+    EntityManager entityManager = new EntityManager();
+    Player player1;
+    Player player2;
+
+    public Invasion(GraphicsContext gc, double width, double height) {
+        super(gc, width, height);
+
+
         onResize();
     }
 
@@ -30,4 +38,9 @@ public class Invasion extends GameCore {
         level.onResize(WIDTH, HEIGHT);
     }
 
+    }
+
+    public void onResize() {
+
+    }
 }

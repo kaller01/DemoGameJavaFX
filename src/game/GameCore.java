@@ -10,11 +10,16 @@ abstract public class GameCore {
     Level level;
 
     protected HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
+    EntityManager entityManager = new EntityManager();
 
     public GameCore(GraphicsContext gc, double width, double height) {
         this.gc = gc;
         this.WIDTH = width;
         this.HEIGHT = height;
+        level = new Level(gc, WIDTH, HEIGHT);
+        level.draw(gc);
+        Entity.setGraphicsContext(gc);
+        Entity.setEntityManager(entityManager);
     }
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
