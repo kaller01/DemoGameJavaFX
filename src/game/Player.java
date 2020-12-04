@@ -1,6 +1,5 @@
 package game;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.HashMap;
@@ -9,10 +8,15 @@ public class Player extends Entity {
     protected HashMap<String, String> keySchema = new HashMap<>();
     protected double acceleration = 1000;
     protected double projectileVx = 500;
-    protected double recharge = 0.5;
-    protected double cooldown = 0;
+    protected double recharge = 0.2;
+    protected double cooldown = 0.2;
+    protected double cooldownTimer = 0;
+    protected double passiveReload = 1;
+    protected double passiveReloadTimer = 1;
     protected int number;
-
+    protected double hp = 5;
+    protected double projectileCapacity = 6;
+    protected double projectiles = projectileCapacity;
 
     Player(int number) {
         super();
@@ -90,16 +94,23 @@ public class Player extends Entity {
         this.vx *= 0.97;
         this.vy *= 0.97;
 
-        this.updateCooldown(deltaTime);
+        this.updateTimers(deltaTime);
     }
 
-    public void updateCooldown(double deltaTime) {
-        if (cooldown >= 0) cooldown -= deltaTime;
-        if (cooldown < 0) cooldown = 0;
+    public void updateTimers(double deltaTime) {
+        if (cooldownTimer >= 0) cooldownTimer -= deltaTime;
+        if (cooldownTimer < 0) cooldownTimer = 0;
+
+        System.out.println("Proj: "+projectiles+"\nTimer: " + passiveReloadTimer +"\n");
+        if(projectiles<projectileCapacity) passiveReloadTimer -= deltaTime;
+        if(passiveReloadTimer<=0) {
+            projectiles++;
+            passiveReloadTimer = passiveReload;
+        }
     }
 
     public boolean isLoaded() {
-        return cooldown <= 0;
+        return cooldownTimer <= 0 && projectiles>0;
     }
 
 
@@ -109,7 +120,8 @@ public class Player extends Entity {
             if(projectileVx>0) xComp = size*1.5;
             else xComp = -size;
             new Projectile(x+xComp, y, projectileVx + vx, vy);
-            cooldown = recharge;
+            cooldownTimer = cooldown;
+            projectiles--;
         }
     }
 
@@ -124,4 +136,15 @@ public class Player extends Entity {
         if (isInsideBorderY(y)) this.y = y;
         else this.vy = -this.vy;
     }
+
+    @Override
+    public void onCollision(){
+        hp--;
+        System.out.println(hp);
+        if(hp<=0){
+            entityManager.removeEntity(this);
+        }
+
+    }
+
 }

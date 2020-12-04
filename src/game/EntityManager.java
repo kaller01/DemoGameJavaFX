@@ -1,6 +1,8 @@
 package game;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class EntityManager {
     //Both players and projectiles
@@ -11,19 +13,21 @@ public class EntityManager {
 
     /**
      * Adds entity to the entityManager. This should only be called from the entity itself
+     *
      * @param entity
      */
-    public void addEntity(Entity entity){
+    public void addEntity(Entity entity) {
         entities.add(entity);
     }
 
     /**
      * Sets the acceleration for all players based on which keys are pressed.
      * All players have specific key schemas.
+     *
      * @param keys
      */
     public void movePlayers(HashMap<String, Boolean> keys) {
-        players.forEach((number,player) -> {
+        players.forEach((number, player) -> {
             player.move(keys);
         });
     }
@@ -31,16 +35,18 @@ public class EntityManager {
     /**
      * Gets player based on number.
      * Usually 1 and 2
+     *
      * @param number
      * @return
      */
-    public Player getPlayer(int number){
+    public Player getPlayer(int number) {
         return players.get(number);
     }
 
     /**
      * Updates all entities based on deltaTime.
      * Also checks for collision between ALL entities. (players and projectiles currently)
+     *
      * @param deltaTime
      */
     public void updateAll(double deltaTime) {
@@ -62,10 +68,8 @@ public class EntityManager {
 
         }
 
-        for (Entity entity : collidedEntities) {
-            //TODO let each Entity decide what to do when collided
-            entities.remove(entity);
-        }
+        collidedEntities.forEach((entity -> entity.onCollision()));
+        if (collidedEntities.size() > 0) collidedEntities = new HashSet<>();
     }
 
     /**
@@ -77,6 +81,7 @@ public class EntityManager {
 
     /**
      * Adds the player
+     *
      * @param player
      */
     public void addPlayer(Player player) {
@@ -86,6 +91,7 @@ public class EntityManager {
 
     /**
      * Checks the collision between two entities
+     *
      * @param en1 Entity, order doesn't matter
      * @param en2 Entity, order doesn't matter
      * @return true if the distance is less than the biggest Entity size
@@ -99,6 +105,10 @@ public class EntityManager {
             return true;
         }
         return false;
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 
 

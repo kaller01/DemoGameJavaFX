@@ -129,6 +129,8 @@ abstract public class Entity {
         return y+size/2;
     }
 
-//    abstract void onCollision();
+    public void onCollision(){
+        entityManager.removeEntity(this);
+    }
 
 }

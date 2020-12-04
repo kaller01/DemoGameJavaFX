@@ -11,7 +11,7 @@ public class Dual extends GameCore {
     public Dual(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
         player2 = new Player(2);
-        player1 = new Player(1);
+        player1 = new Heavy(1);
 
         onResize();
     }
