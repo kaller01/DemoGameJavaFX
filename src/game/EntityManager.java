@@ -111,5 +111,11 @@ public class EntityManager {
         entities.remove(entity);
     }
 
+    public void onResize(double width, double height){
+        entities.forEach(entity -> {
+            entity.setScale(width/1424);
+        });
+    }
+
 
 }

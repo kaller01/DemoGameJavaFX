@@ -14,16 +14,15 @@ public class Heavy extends Player {
     @Override
     public void draw() {
         gc.setFill(Color.RED);
-        gc.fillRect(x, y, size, size);
+        gc.fillRect(x, y, getSize(), getSize());
         gc.setFill(Color.BLACK);
-        double projectilesSize = size/4;
-        double margin;
+        double projectilesSize = getSize()/4;
         for (int i = 0; i < projectiles; i++) {
             if(i<3){
-                gc.fillRect(x+((size-projectilesSize)/2)*i, getY()-size*0.75-projectilesSize/2, size/4, size/4);
+                gc.fillRect(x+((getSize()-projectilesSize)/2)*i, getY()-getSize()*0.75-projectilesSize/2, getSize()/4, getSize()/4);
             }
             else {
-                gc.fillRect(x+((size-projectilesSize)/2)*(i-3), getY()+size*0.75-projectilesSize/2, size/4, size/4);
+                gc.fillRect(x+((getSize()-projectilesSize)/2)*(i-3), getY()+getSize()*0.75-projectilesSize/2, getSize()/4, getSize()/4);
             }
 
         }

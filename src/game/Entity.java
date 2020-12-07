@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 abstract public class Entity {
     double x, y, vx, vy, ax, ay, vMax, size;
+    protected double scale = 1;
     public Double[] border = new Double[4];
     protected static GraphicsContext gc;
     protected static EntityManager entityManager;
@@ -25,14 +26,16 @@ abstract public class Entity {
     /**
      * Sets the EntityManager of all entities.
      * Assumptions that there will only be one EntityManager for all entities
+     *
      * @param em
      */
-    public static void setEntityManager(EntityManager em){
+    public static void setEntityManager(EntityManager em) {
         entityManager = em;
     }
 
     /**
      * Sets GraphicsContext from canvas
+     *
      * @param graphicsContext
      */
     public static void setGraphicsContext(GraphicsContext graphicsContext) {
@@ -41,6 +44,7 @@ abstract public class Entity {
 
     /**
      * Updates velocity and location of Entity.
+     *
      * @param deltaTime
      */
     public void update(double deltaTime) {
@@ -64,24 +68,27 @@ abstract public class Entity {
 
     /**
      * Checks if entity is inside border in x
+     *
      * @param x
      * @return true if inside
      */
     public boolean isInsideBorderX(double x) {
-        return (x <= border[2] - size && x >= border[0]);
+        return (x <= border[2] - getSize() && x >= border[0]);
     }
 
     /**
      * Checks if entity is inside border in y
+     *
      * @param y
      * @return true if inside
      */
     protected boolean isInsideBorderY(double y) {
-        return (y < border[3] - size && y > border[1]);
+        return (y < border[3] - getSize() && y > border[1]);
     }
 
     /**
      * Sets border size
+     *
      * @param xTop
      * @param yTop
      * @param xBottom
@@ -112,25 +119,29 @@ abstract public class Entity {
      * @return size of Entity
      */
     public double getSize() {
-        return size;
+        return size * scale;
     }
 
     /**
      * @return center x of Entity
      */
-    public double getX(){
-        return x+size/2;
+    public double getX() {
+        return x + (size * scale) / 2;
     }
 
     /**
      * @return center x of Entity
      */
-    public double getY(){
-        return y+size/2;
+    public double getY() {
+        return y + getSize() / 2;
     }
 
-    public void onCollision(){
+    public void onCollision() {
         entityManager.removeEntity(this);
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 
 }

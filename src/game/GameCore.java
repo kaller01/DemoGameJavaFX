@@ -32,7 +32,9 @@ abstract public class GameCore {
 
     public void update(double elapsedTime) {
         level.draw();
-
+        entityManager.updateAll(elapsedTime);
+        entityManager.drawAll();
+        entityManager.movePlayers(currentlyActiveKeys);
         // System.out.println(elapsedTime);
         // System.out.println(1*elapsedTime);
     }
@@ -43,6 +45,10 @@ abstract public class GameCore {
         onResize();
     }
 
-    abstract void onResize();
+    void onResize(){
+        level.onResize(WIDTH,HEIGHT);
+        entityManager.onResize(WIDTH, HEIGHT);
+
+    }
 
 }

@@ -21,16 +21,14 @@ public class Dual extends GameCore {
 //        player1.move(currentlyActiveKeys);
 //        player2.move(currentlyActiveKeys);
 
-        entityManager.updateAll(elapsedTime);
-        entityManager.drawAll();
-        entityManager.movePlayers(currentlyActiveKeys);
+
 
     }
 
     public void onResize() {
+        super.onResize();
         player1.setBorder(0, 0, WIDTH/2, HEIGHT);
         player2.setBorder(WIDTH/2, 0, WIDTH, HEIGHT);
-        level.onResize(WIDTH,HEIGHT);
     }
 
 

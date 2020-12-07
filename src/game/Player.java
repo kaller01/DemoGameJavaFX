@@ -59,7 +59,7 @@ public class Player extends Entity {
     @Override
     public void draw() {
         gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, size, size);
+        gc.fillRect(x, y, getSize(), getSize());
         gc.setFill(Color.RED);
         gc.fillRect(getX(),getY(),1,1);
     }
@@ -101,7 +101,7 @@ public class Player extends Entity {
         if (cooldownTimer >= 0) cooldownTimer -= deltaTime;
         if (cooldownTimer < 0) cooldownTimer = 0;
 
-        System.out.println("Proj: "+projectiles+"\nTimer: " + passiveReloadTimer +"\n");
+//        System.out.println("Proj: "+projectiles+"\nTimer: " + passiveReloadTimer +"\n");
         if(projectiles<projectileCapacity) passiveReloadTimer -= deltaTime;
         if(passiveReloadTimer<=0) {
             projectiles++;
@@ -117,8 +117,8 @@ public class Player extends Entity {
     protected void shoot() {
         if (isLoaded()) {
             double xComp;
-            if(projectileVx>0) xComp = size*1.5;
-            else xComp = -size;
+            if(projectileVx>0) xComp = getSize()*1.5;
+            else xComp = -getSize();
             new Projectile(x+xComp, y, projectileVx + vx, vy);
             cooldownTimer = cooldown;
             projectiles--;
@@ -140,7 +140,7 @@ public class Player extends Entity {
     @Override
     public void onCollision(){
         hp--;
-        System.out.println(hp);
+//        System.out.println(hp);
         if(hp<=0){
             entityManager.removeEntity(this);
         }
