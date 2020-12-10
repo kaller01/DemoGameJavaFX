@@ -21,7 +21,7 @@ abstract public class GameCore {
         Level.setGc(gc);
         level = Level.dual;
 
-
+//        onResize();
     }
 
     public void setCurrentlyActiveKeys(HashMap<String, Boolean> keys) {
@@ -34,7 +34,6 @@ abstract public class GameCore {
         level.draw();
         entityManager.updateAll(elapsedTime);
         entityManager.drawAll();
-        entityManager.movePlayers(currentlyActiveKeys);
         // System.out.println(elapsedTime);
         // System.out.println(1*elapsedTime);
     }

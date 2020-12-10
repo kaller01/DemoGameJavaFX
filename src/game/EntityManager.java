@@ -1,10 +1,11 @@
 package game;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
-public class EntityManager {
+public class EntityManager implements Serializable {
     //Both players and projectiles
     private List<Entity> entities = new ArrayList<>();
     private HashSet<Entity> collidedEntities = new HashSet<>();
@@ -117,5 +118,12 @@ public class EntityManager {
         });
     }
 
-
+    @Override
+    public String toString() {
+        return "EntityManager{" +
+                "entities=" + entities +
+                ", collidedEntities=" + collidedEntities +
+                ", players=" + players +
+                '}';
+    }
 }

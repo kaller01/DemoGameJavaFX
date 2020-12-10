@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 import server.Multiplayer;
 
-public class Main extends Application {
+public class Main2 extends Application {
     public static double WIDTH = 1600;
     public static double HEIGHT = 800;
     public static final int FRAMES_PER_SECOND = 60;
@@ -45,13 +45,13 @@ public class Main extends Application {
         System.out.println(canvas.getWidth());
 
         //Game
-        game = new Host(gc, WIDTH, HEIGHT);
+        game = new Guest(gc, WIDTH, HEIGHT);
 
 
         //timeline and fps
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> {
-            game.update(SECOND_DELAY);
+                    game.update(SECOND_DELAY);
                 });
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);

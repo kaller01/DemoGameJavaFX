@@ -5,21 +5,18 @@ import javafx.scene.paint.Color;
 
 public class Dual extends GameCore {
 
-    Player player1;
-    Player player2;
+    Player player1 = new Heavy(1);
+    Player player2 = new Player(2);
 
     public Dual(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
-        player2 = new Player(2);
-        player1 = new Heavy(1);
-
-        onResize();
     }
 
     public void update(double elapsedTime) {
         super.update(elapsedTime);
 //        player1.move(currentlyActiveKeys);
 //        player2.move(currentlyActiveKeys);
+        entityManager.movePlayers(currentlyActiveKeys);
 
 
 

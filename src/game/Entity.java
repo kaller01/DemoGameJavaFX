@@ -2,8 +2,10 @@ package game;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.io.Serializable;
 
-abstract public class Entity {
+
+abstract public class Entity implements Serializable {
     double x, y, vx, vy, ax, ay, vMax, size;
     protected double scale = 1;
     public Double[] border = new Double[4];
