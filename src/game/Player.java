@@ -18,7 +18,7 @@ public class Player extends Entity {
     protected double projectileCapacity = 6;
     protected double projectiles = projectileCapacity;
 
-    Player(int number) {
+    public Player(int number) {
         super();
         vMax = 300;
         size = 30;
