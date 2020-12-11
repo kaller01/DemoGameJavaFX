@@ -15,7 +15,7 @@ public class Host extends GameCore {
     public Host(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
         host.start("192.168.2.213", 3200);
-        player2 = new Player(2);
+        player2 = new Speedo(2);
         player1 = new Heavy(1);
         onResize();
     }

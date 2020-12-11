@@ -37,23 +37,17 @@ public enum Level {
 
     public void drawDual() {
         //Main background
-        gc.setFill(Color.LIGHTGOLDENRODYELLOW);
+        gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, WIDTH, HEIGHT);
 
         //The black line to the left
-        gc.setFill(Color.BLACK);
+        gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, WIDTH * 0.009, HEIGHT);
-
         //The black line to the right
-        gc.setFill(Color.BLACK);
         gc.fillRect(WIDTH * 0.991, 0, WIDTH * 0.009, HEIGHT);
-
         //The line in the middle
-        gc.setFill(Color.BLACK);
         gc.fillRect(WIDTH * 0.495, 0, WIDTH * 0.01, HEIGHT);
-
         //The line at the bottom
-        gc.setFill(Color.BLACK);
         gc.fillRect(0, HEIGHT * 0.991, WIDTH, HEIGHT * 0.9);
 
 

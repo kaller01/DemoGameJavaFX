@@ -13,9 +13,13 @@ public class Heavy extends Player {
 
     @Override
     public void draw() {
-        gc.setFill(Color.RED);
+        double stroke = getSize()*0.07;
+        gc.setFill(new Color(1,0,0,((hp+3)/8)));
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(stroke);
         gc.fillRect(x, y, getSize(), getSize());
-        gc.setFill(Color.BLACK);
+        gc.strokeRect(x+stroke/2,y+stroke/2,getSize()-stroke,getSize()-stroke);
+        gc.setFill(Color.WHITE);
         double projectilesSize = getSize()/4;
         for (int i = 0; i < projectiles; i++) {
             if(i<3){

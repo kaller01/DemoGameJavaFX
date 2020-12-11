@@ -11,12 +11,13 @@ public class Player extends Entity {
     protected double recharge = 0.2;
     protected double cooldown = 0.2;
     protected double cooldownTimer = 0;
-    protected double passiveReload = 1;
+    private double passiveReload = 1;
     protected double passiveReloadTimer = 1;
     protected int number;
     protected double hp = 5;
     protected double projectileCapacity = 6;
     protected double projectiles = projectileCapacity;
+    protected Boolean hold=false;
 
     public Player(int number) {
         super();
@@ -82,7 +83,11 @@ public class Player extends Entity {
         }
 
         if (currentlyActiveKeys.containsKey(keySchema.get("SHOOT"))) {
+            //Makes sure you can't hold in the button
+            hold = true;
+        } else if(hold){
             shoot();
+            hold=false;
         }
     }
 
@@ -91,8 +96,8 @@ public class Player extends Entity {
         super.update(deltaTime);
 
         //Friction
-        this.vx *= 0.97;
-        this.vy *= 0.97;
+        if(ax == 0) this.vx *= 0.95;
+        if(ay == 0) this.vy *= 0.95;
 
         this.updateTimers(deltaTime);
     }

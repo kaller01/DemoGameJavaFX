@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 abstract public class Entity implements Serializable {
     double x, y, vx, vy, ax, ay, vMax, size;
-    protected double scale = 1;
+    protected static double scale = 1;
     public Double[] border = new Double[4];
     protected static GraphicsContext gc;
     protected static EntityManager entityManager;
@@ -142,8 +142,8 @@ abstract public class Entity implements Serializable {
         entityManager.removeEntity(this);
     }
 
-    public void setScale(double scale) {
-        this.scale = scale;
+    public static void setScale(double scaleTmp) {
+        scale = scaleTmp;
     }
 
 }
