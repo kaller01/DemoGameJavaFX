@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 public class Dual extends GameCore {
 
     Player player1 = new Heavy(1);
-    Player player2 = new Player(2);
+    Player player2 = new Speedo(2);
 
     public Dual(GraphicsContext gc, double width, double height) {
         super(gc, width, height);

@@ -1,0 +1,86 @@
+@startuml
+
+Package game{
+
+
+
+class Entity{
+    static entityManager
+
+    abstract draw()
+    update()
+}
+
+interface SpecialAbility
+
+abstract class Player{
+    hp
+    abstract draw()
+    move()
+}
+
+class Heavy{
+    draw()
+}
+class Speedo{
+    draw()
+}
+class WIP{
+    draw()
+}
+
+Heavy .u.> SpecialAbility
+WIP .u.> SpecialAbility
+
+Player -u-|> Entity
+Heavy -u-|> Player
+Speedo -u-|> Player
+Projectile -u-|> Entity
+
+abstract class GameCore {
+    entityManager
+}
+class Dual
+class Host
+class Guest
+class Invasion
+
+Dual -u-|> GameCore
+Invasion -u-|> GameCore
+Host -u-|> GameCore
+Guest -u-|> GameCore
+Player --* Projectile
+
+GameCore --* Player
+
+class EntityManager
+
+EntityManager --* Entity
+GameCore --* EntityManager
+
+
+}
+
+
+
+
+package server{
+class P2P
+class Server
+class Client
+class P2PThread
+enum Multiplayer
+Server -u-|> P2P
+Client -u-|> P2P
+P2PThread --* P2P
+Multiplayer --* P2PThread
+Multiplayer --* P2P
+Multiplayer --* Server
+Multiplayer --* Client
+Host -l-* Multiplayer
+Guest -l-* Multiplayer
+Host --* Server
+Guest --* Client
+}
+
+@enduml

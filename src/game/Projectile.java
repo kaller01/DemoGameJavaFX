@@ -30,10 +30,8 @@ public class Projectile extends Entity {
      * Draws the projectile
      */
     public void draw() {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, size, size);
-        gc.setFill(Color.RED);
-        gc.fillRect(getX(), getY(), 1, 1);
+        gc.setFill(Color.WHITE);
+        gc.fillRect(x, y, size*scale, size*scale);
     }
 
     @Override
