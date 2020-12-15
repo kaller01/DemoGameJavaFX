@@ -12,9 +12,9 @@ public class Host extends GameCore {
     Multiplayer host = Multiplayer.host;
     private HashMap<String, Boolean> currentlyActiveKeys2 = new HashMap<>();
 
-    public Host(GraphicsContext gc, double width, double height) {
+    public Host(GraphicsContext gc, double width, double height, int port) {
         super(gc, width, height);
-        host.start("192.168.2.213", 3200);
+        host.start("", port);
         player2 = new Speedo(2);
         player1 = new Heavy(1);
         onResize();

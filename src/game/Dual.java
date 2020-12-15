@@ -1,7 +1,7 @@
 package game;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import sounds.SoundEffects;
 
 public class Dual extends GameCore {
 

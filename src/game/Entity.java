@@ -138,7 +138,7 @@ abstract public class Entity implements Serializable {
         return y + getSize() / 2;
     }
 
-    public void onCollision() {
+    public void onCollision(Entity entity) {
         entityManager.removeEntity(this);
     }
 

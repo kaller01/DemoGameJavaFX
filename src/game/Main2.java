@@ -45,7 +45,7 @@ public class Main2 extends Application {
         System.out.println(canvas.getWidth());
 
         //Game
-        game = new Guest(gc, WIDTH, HEIGHT);
+//        game = new Guest(gc, WIDTH, HEIGHT);
 
 
         //timeline and fps
