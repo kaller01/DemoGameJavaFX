@@ -142,7 +142,8 @@ public class SceneManager {
         root.setMinHeight(minHeight);
         Button button1 = new Button("The Hunger Games");
         Button button2 = new Button("The Invasion");
-        Button button3 = new Button("Multiplayer");
+        Button button3 = new Button("Multiplayer | Host");
+        Button button4 = new Button("Multiplayer | Guest");
      //   button2.setOnAction(e -> { gameScene;
 
        // });
@@ -152,7 +153,7 @@ public class SceneManager {
         root.getChildren().add(SelectMod);
 
         //Adding buttons horizontally
-        HBox hbox = new HBox(button1,button2, button3);
+        HBox hbox = new HBox(button1,button2, button3, button4);
         hbox.setSpacing(30);
 
         root.getChildren().addAll(hbox);
@@ -160,6 +161,36 @@ public class SceneManager {
 
         ModScene = new Scene(root);
         ModScene.getStylesheets().add("/css/start.css");
+
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                game = new Dual(getGraphicsContext(), minWidth, minHeight);
+                showCanvas();
+            }
+        });
+
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                game = new Invasion(getGraphicsContext(), minWidth, minHeight);
+                showCanvas();
+            }
+        });
+
+        button3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showSelectPort();
+            }
+        });
+
+        button4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showSelectHost();
+            }
+        });
 
 
     }
@@ -187,7 +218,7 @@ public class SceneManager {
     }
 
     public Scene getGameScene(){
-        return startScene;
+        return gameScene;
     }
 
     public GraphicsContext getGraphicsContext(){

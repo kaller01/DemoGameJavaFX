@@ -100,7 +100,7 @@ public class Player extends Entity {
         if (cooldownTimer >= 0) cooldownTimer -= deltaTime;
         if (cooldownTimer < 0) cooldownTimer = 0;
 
-        System.out.println("Proj: " + projectiles + "\nTimer: " + projectileReloadTimer + "\n");
+//        System.out.println("Proj: " + projectiles + "\nTimer: " + projectileReloadTimer + "\n");
         if (projectiles < projectileCapacity) projectileReloadTimer -= deltaTime;
         if (projectileReloadTimer <= 0) {
             projectiles++;
