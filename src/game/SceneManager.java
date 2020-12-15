@@ -2,6 +2,7 @@ package game;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -19,6 +20,7 @@ public class SceneManager {
     GameCore game;
     Scene gameScene;
     Scene startScene;
+    Scene ModScene;
     Scene selectPort;
     Scene selectHost;
     ResizableCanvas canvas;
@@ -65,7 +67,7 @@ public class SceneManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                showSelectHost();
+                ShowMod();
             }
         });
     }
@@ -133,13 +135,48 @@ public class SceneManager {
         });
     }
 
-    public void showCanvas(){
+    public void selectMod(){
+        VBox root = new VBox();
+        root.setAlignment(Pos.CENTER);
+        root.setMinWidth(minWidth);
+        root.setMinHeight(minHeight);
+        Button button1 = new Button("The Hunger Games");
+        Button button2 = new Button("The Invasion");
+        Button button3 = new Button("Multiplayer");
+     //   button2.setOnAction(e -> { gameScene;
+
+       // });
+
+
+        Label SelectMod = new Label("Select mod");
+        root.getChildren().add(SelectMod);
+
+        //Adding buttons horizontally
+        HBox hbox = new HBox(button1,button2, button3);
+        hbox.setSpacing(30);
+
+        root.getChildren().addAll(hbox);
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
+
+        ModScene = new Scene(root);
+        ModScene.getStylesheets().add("/css/start.css");
+
+
+    }
+
+
+
+    public void showCanvas() {
         stage.setScene(gameScene);
     }
 
     public void showStart(){
         stage.setScene(startScene);
     }
+
+    public void ShowMod(){
+        stage.setScene(ModScene);
+        }
 
     public void showSelectPort(){
         stage.setScene(selectPort);
@@ -150,7 +187,7 @@ public class SceneManager {
     }
 
     public Scene getGameScene(){
-        return gameScene;
+        return startScene;
     }
 
     public GraphicsContext getGraphicsContext(){
