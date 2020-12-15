@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public enum Level {
 
-    dual("dual");
+    dual("dual"), invasion("invasion");
 
     String mood;
     static GraphicsContext gc;
@@ -31,9 +31,15 @@ public enum Level {
             case "dual":
                 drawDual();
                 break;
+            case "invasion":
+                drawInvasion();
         }
     }
 
+    public void drawInvasion(){
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, WIDTH, HEIGHT);
+    }
 
     public void drawDual() {
         //Main background

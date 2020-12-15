@@ -6,6 +6,13 @@
 }
 
 
+TextField {
+    -fx-spacing: 30px;
+    -fx-text-inner-color: white;
+    -fx-background-color: black;
+}
+
+
 #bamk, label, .bamk {
 }
 

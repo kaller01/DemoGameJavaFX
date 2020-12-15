@@ -8,7 +8,10 @@ public class Speedo extends Player {
     public Speedo(int number) {
         super(number);
         projectiles = projectileCapacity = 8;
-        passiveReloadTimer = 0.7;
+        projectileReloadTimer = 0.7;
+        hp= 4;
+        vMax*=1.5;
+        acceleration*=1.5;
     }
 
     public void draw() {
@@ -24,7 +27,5 @@ public class Speedo extends Player {
         for (int i = 0; i < projectiles; i++) {
             gc.fillOval(getX()+getSize()*0.75*Math.cos((i*(2*Math.PI)/10)+Math.PI*1.3)-projectilesSize/2, getY()+getSize()*0.75*Math.sin(i*(2*Math.PI)/10+Math.PI*1.3)-projectilesSize/2, getSize()/4, getSize()/4);
         }
-
-
     }
 }

@@ -1,27 +1,28 @@
 package game;
 
 import javafx.scene.paint.Color;
+import sounds.SoundEffects;
 
 import java.util.HashMap;
 
 public class Player extends Entity {
     protected HashMap<String, String> keySchema = new HashMap<>();
-    protected double acceleration = 1000;
+    protected double acceleration = 600;
     protected double projectileVx = 500;
-    protected double recharge = 0.2;
     protected double cooldown = 0.2;
     protected double cooldownTimer = 0;
-    private double passiveReload = 1;
-    protected double passiveReloadTimer = 1;
+    protected double projectileReloadTime = 1;
+    protected double projectileReloadTimer = 1;
     protected int number;
     protected double hp = 5;
     protected double projectileCapacity = 6;
     protected double projectiles = projectileCapacity;
-    protected Boolean hold=false;
+    protected double projectileDamage = 1;
+    protected Boolean hold = false;
 
     public Player(int number) {
         super();
-        vMax = 300;
+        vMax = 200;
         size = 30;
 
         //References the same memory. Should work because it isn't a copy
@@ -49,11 +50,9 @@ public class Player extends Entity {
                 y = 100;
                 break;
         }
-
-
     }
 
-    public int getNumber(){
+    public int getNumber() {
         return number;
     }
 
@@ -62,7 +61,7 @@ public class Player extends Entity {
         gc.setFill(Color.BLACK);
         gc.fillRect(x, y, getSize(), getSize());
         gc.setFill(Color.RED);
-        gc.fillRect(getX(),getY(),1,1);
+        gc.fillRect(getX(), getY(), 1, 1);
     }
 
     public void move(HashMap<String, Boolean> currentlyActiveKeys) {
@@ -82,49 +81,55 @@ public class Player extends Entity {
             ax = 0;
         }
 
-        if (currentlyActiveKeys.containsKey(keySchema.get("SHOOT"))) {
-            //Makes sure you can't hold in the button
-            hold = true;
-        } else if(hold){
-            shoot();
-            hold=false;
-        }
+        prepareShoot(currentlyActiveKeys.containsKey(keySchema.get("SHOOT")));
     }
+
 
     @Override
     public void update(double deltaTime) {
         super.update(deltaTime);
 
         //Friction
-        if(ax == 0) this.vx *= 0.95;
-        if(ay == 0) this.vy *= 0.95;
+        if (ax == 0) this.vx *= 0.95;
+        if (ay == 0) this.vy *= 0.95;
 
         this.updateTimers(deltaTime);
     }
 
-    public void updateTimers(double deltaTime) {
+    private void updateTimers(double deltaTime) {
         if (cooldownTimer >= 0) cooldownTimer -= deltaTime;
         if (cooldownTimer < 0) cooldownTimer = 0;
 
-//        System.out.println("Proj: "+projectiles+"\nTimer: " + passiveReloadTimer +"\n");
-        if(projectiles<projectileCapacity) passiveReloadTimer -= deltaTime;
-        if(passiveReloadTimer<=0) {
+        System.out.println("Proj: " + projectiles + "\nTimer: " + projectileReloadTimer + "\n");
+        if (projectiles < projectileCapacity) projectileReloadTimer -= deltaTime;
+        if (projectileReloadTimer <= 0) {
             projectiles++;
-            passiveReloadTimer = passiveReload;
+            projectileReloadTimer = projectileReloadTime;
         }
     }
 
-    public boolean isLoaded() {
-        return cooldownTimer <= 0 && projectiles>0;
+    protected boolean isLoaded() {
+        return cooldownTimer <= 0 && projectiles > 0;
+    }
+
+    protected void prepareShoot(Boolean key) {
+        if (key) {
+            //Makes sure you can't hold in the button
+            hold = true;
+        } else if (hold) {
+            shoot();
+            hold = false;
+        }
     }
 
 
     protected void shoot() {
         if (isLoaded()) {
+            SoundEffects.play(SoundEffects.getFire1());
             double xComp;
-            if(projectileVx>0) xComp = getSize()*1.5;
+            if (projectileVx > 0) xComp = getSize() * 1.5;
             else xComp = -getSize();
-            new Projectile(x+xComp, y, projectileVx + vx, vy);
+            new Projectile(getX() + xComp, getY() - getSize() / 3, projectileVx + vx, vy, projectileDamage);
             cooldownTimer = cooldown;
             projectiles--;
         }
@@ -143,12 +148,15 @@ public class Player extends Entity {
     }
 
     @Override
-    public void onCollision(){
-        hp--;
-//        System.out.println(hp);
-        if(hp<=0){
-            entityManager.removeEntity(this);
+    public void onCollision(Entity entity) {
+        if (entity instanceof Projectile) {
+            hp -= ((Projectile) entity).getDamage();
+            if (hp <= 0) {
+                entityManager.removeEntity(this);
+                SoundEffects.play(SoundEffects.getGameover());
+            } else SoundEffects.play(SoundEffects.getHit());
         }
+
 
     }
 

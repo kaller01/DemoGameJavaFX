@@ -5,12 +5,11 @@ import server.Client;
 import server.Multiplayer;
 
 public class Guest extends GameCore {
-    private Client client;
     Multiplayer guest = Multiplayer.guest;
 
-    public Guest(GraphicsContext gc, double width, double height) {
+    public Guest(GraphicsContext gc, double width, double height, String ip, int port) {
         super(gc, width, height);
-        guest.start("192.168.2.213", 3200);
+        guest.start(ip, port);
         onResize();
     }
 

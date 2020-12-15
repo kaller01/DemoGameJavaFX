@@ -9,6 +9,7 @@ public class EntityManager implements Serializable {
     //Both players and projectiles
     private List<Entity> entities = new ArrayList<>();
     private HashSet<Entity> collidedEntities = new HashSet<>();
+    private HashSet<Entity> entitiesToRemove = new HashSet<>();
     //Only players
     private HashMap<Integer, Player> players = new HashMap<>();
 
@@ -51,26 +52,21 @@ public class EntityManager implements Serializable {
      * @param deltaTime
      */
     public void updateAll(double deltaTime) {
-        Iterator<Entity> ens1 = entities.iterator();
-        while (ens1.hasNext()) {
-            Entity en1 = ens1.next();
+        entities.forEach(en1 -> {
             en1.update(deltaTime);
-
-            Iterator<Entity> ens2 = entities.iterator();
-            while (ens2.hasNext()) {
-                Entity en2 = ens2.next();
+            entities.forEach(en2 -> {
                 if (en1 != en2) {
                     if (collision(en1, en2)) {
-                        collidedEntities.add(en2);
-                        collidedEntities.add(en1);
+                        en1.onCollision(en2);
+                        en2.onCollision(en1);
                     }
                 }
-            }
+            });
+        });
 
-        }
 
-        collidedEntities.forEach((entity -> entity.onCollision()));
-        if (collidedEntities.size() > 0) collidedEntities = new HashSet<>();
+        entitiesToRemove.forEach(entity -> entities.remove(entity));
+        if (entitiesToRemove.size() > 0) entitiesToRemove = new HashSet<>();
     }
 
     /**
@@ -108,8 +104,13 @@ public class EntityManager implements Serializable {
         return false;
     }
 
+    /**
+     * If the entities where to be removed at the direct moment, it could break loops. Therefore it puts it in a remove list which is executed after all list looping is done.
+     *
+     * @param entity
+     */
     public void removeEntity(Entity entity) {
-        entities.remove(entity);
+        entitiesToRemove.add(entity);
     }
 
     public void onResize(double width, double height) {

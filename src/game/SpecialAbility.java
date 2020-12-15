@@ -1,5 +1,6 @@
 package game;
 
 public interface SpecialAbility {
-    String color = null;
+    void shootCharge();
+    void updateCharge(double deltaTime);
 }
