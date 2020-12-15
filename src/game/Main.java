@@ -23,13 +23,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("BAMK Game");
         sceneManager = new SceneManager(primaryStage);
-        sceneManager.setupCanvas();
+        sceneManager.selectMod();
         sceneManager.setupMenu();
+        sceneManager.setupCanvas();
         sceneManager.setupSelectPort();
         sceneManager.setupSelectHost();
 
+
         primaryStage.setScene(sceneManager.getGameScene());
         sceneManager.showStart();
+
 
         //Ready
         primaryStage.show();
