@@ -20,7 +20,7 @@ public class SceneManager {
     GameCore game;
     Scene gameScene;
     Scene startScene;
-    Scene ModScene;
+    Scene modeScene;
     Scene selectPort;
     Scene selectHost;
     ResizableCanvas canvas;
@@ -29,14 +29,13 @@ public class SceneManager {
     double minWidth = 1600;
     double minHeight = 800;
 
-    public SceneManager(Stage stage){
+    public SceneManager(Stage stage) {
         this.stage = stage;
     }
 
-
     public void setupCanvas() {
         canvas = new ResizableCanvas();
-        //        Canvas canvas = new Canvas();
+        // Canvas canvas = new Canvas();
         gc = canvas.getGraphicsContext2D();
 
         StackPane root = new StackPane();
@@ -50,8 +49,8 @@ public class SceneManager {
         gameScene = new Scene(root);
     }
 
-    public void setupMenu(){
-//        StackPane root = new StackPane();
+    public void setupMenu() {
+        // StackPane root = new StackPane();
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setMinWidth(minWidth);
@@ -60,19 +59,19 @@ public class SceneManager {
         Button button1 = new Button("Settings");
         Label bamk = new Label("BAMK");
         bamk.setTextFill(Color.WHITE);
-        root.getChildren().addAll(bamk,button);
+        root.getChildren().addAll(bamk, button);
         startScene = new Scene(root);
         startScene.getStylesheets().add("/css/start.css");
 
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                ShowMod();
+                ShowMode();
             }
         });
     }
 
-    public void setupSelectPort(){
+    public void setupSelectPort() {
         VBox root = new VBox();
         HBox h = new HBox();
         root.setAlignment(Pos.CENTER);
@@ -86,8 +85,8 @@ public class SceneManager {
         Label bamk = new Label("Port:");
         bamk.setTextFill(Color.WHITE);
 
-        h.getChildren().addAll(bamk,textfield);
-        root.getChildren().addAll(h,button);
+        h.getChildren().addAll(bamk, textfield);
+        root.getChildren().addAll(h, button);
         selectPort = new Scene(root);
         selectPort.getStylesheets().add("/css/start.css");
 
@@ -100,7 +99,7 @@ public class SceneManager {
         });
     }
 
-    public void setupSelectHost(){
+    public void setupSelectHost() {
         VBox root = new VBox();
         HBox h = new HBox();
         HBox h2 = new HBox();
@@ -120,22 +119,23 @@ public class SceneManager {
         port.setTextFill(Color.WHITE);
         host.setTextFill(Color.WHITE);
 
-        h2.getChildren().addAll(host,textField2);
-        h.getChildren().addAll(port,textfield);
-        root.getChildren().addAll(h,h2,button);
+        h2.getChildren().addAll(host, textField2);
+        h.getChildren().addAll(port, textfield);
+        root.getChildren().addAll(h, h2, button);
         selectHost = new Scene(root);
         selectHost.getStylesheets().add("/css/start.css");
 
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                game = new Guest(getGraphicsContext(), minWidth, minHeight, textField2.getText(), Integer.parseInt(textfield.getText()));
+                game = new Guest(getGraphicsContext(), minWidth, minHeight, textField2.getText(),
+                        Integer.parseInt(textfield.getText()));
                 showCanvas();
             }
         });
     }
 
-    public void selectMod(){
+    public void selectMode() {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setMinWidth(minWidth);
@@ -144,23 +144,23 @@ public class SceneManager {
         Button button2 = new Button("The Invasion");
         Button button3 = new Button("Multiplayer | Host");
         Button button4 = new Button("Multiplayer | Guest");
-     //   button2.setOnAction(e -> { gameScene;
 
-       // });
+        // button2.setOnAction(e -> { gameScene;
 
+        // });
 
-        Label SelectMod = new Label("Select mod");
-        root.getChildren().add(SelectMod);
+        Label SelectMode = new Label("Select mode");
+        root.getChildren().add(SelectMode);
 
-        //Adding buttons horizontally
-        HBox hbox = new HBox(button1,button2, button3, button4);
+        // Adding buttons horizontally
+        HBox hbox = new HBox(button1, button2, button3, button4);
         hbox.setSpacing(30);
 
         root.getChildren().addAll(hbox);
         hbox.setAlignment(Pos.BOTTOM_CENTER);
 
-        ModScene = new Scene(root);
-        ModScene.getStylesheets().add("/css/start.css");
+        modeScene = new Scene(root);
+        modeScene.getStylesheets().add("/css/start.css");
 
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -192,40 +192,38 @@ public class SceneManager {
             }
         });
 
-
     }
-
-
 
     public void showCanvas() {
         stage.setScene(gameScene);
     }
 
-    public void showStart(){
+    public void showStart() {
         stage.setScene(startScene);
     }
 
-    public void ShowMod(){
-        stage.setScene(ModScene);
-        }
+    public void ShowMode() {
+        stage.setScene(modeScene);
 
-    public void showSelectPort(){
+    }
+
+    public void showSelectPort() {
         stage.setScene(selectPort);
     }
 
-    public void showSelectHost(){
+    public void showSelectHost() {
         stage.setScene(selectHost);
     }
 
-    public Scene getGameScene(){
-        return gameScene;
+    public Scene getGameScene() {
+        return startScene;
     }
 
-    public GraphicsContext getGraphicsContext(){
+    public GraphicsContext getGraphicsContext() {
         return gc;
     }
 
-    public Canvas getCanvas(){
+    public Canvas getCanvas() {
         return canvas;
     }
 
