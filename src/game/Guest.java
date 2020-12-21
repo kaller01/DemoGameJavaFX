@@ -10,6 +10,7 @@ public class Guest extends GameCore {
     public Guest(GraphicsContext gc, double width, double height, Multiplayer guest) {
         super(gc, width, height);
         this.guest = guest;
+        guest.start();
         onResize();
     }
 
@@ -19,6 +20,7 @@ public class Guest extends GameCore {
 
         if(guest.isConnected()){
             guest.getConnection().setUpdate(currentlyActiveKeys);
+            guest.getConnection().update();
             entityManager = (EntityManager) guest.getConnection().read();
             if(entityManager != null){
                 entityManager.drawAll();

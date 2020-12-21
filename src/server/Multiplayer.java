@@ -13,13 +13,14 @@ public enum Multiplayer {
         this.isHost = isHost;
     }
 
-    public void connect(String ip, int port){
+    public void connect(String ip, int port) throws IOException {
         if(isHost) connection = new Server(port);
         else connection = new Client(ip,port);
-        start();
+        connection.connect();
     }
 
     public void start(){
+        System.out.print("STARTING THREAD");
         thread = new P2PThread(connection);
         thread.start();
     }

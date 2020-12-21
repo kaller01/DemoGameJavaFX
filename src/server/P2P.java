@@ -26,6 +26,8 @@ abstract public class P2P {
         try {
             output.reset();
             output.writeObject(objectToSend);
+            System.out.print("Objecttosend: ");
+            System.out.println(objectToSend);
         } catch (IOException e){
             e.printStackTrace();
         }

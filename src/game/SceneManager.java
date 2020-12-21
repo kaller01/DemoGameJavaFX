@@ -20,6 +20,7 @@ import server.Multiplayer;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 public class SceneManager {
     GameCore game;
@@ -100,7 +101,11 @@ public class SceneManager {
             public void handle(ActionEvent actionEvent) {
                 int port = Integer.parseInt(textfield.getText());
                 Multiplayer host = Multiplayer.host;
-                host.connect("", port);
+                try {
+                    host.connect("", port);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 int tries = 0;
 
@@ -155,14 +160,24 @@ public class SceneManager {
                 String ip = textField2.getText();
                 int port = Integer.parseInt(textfield.getText());
                 Multiplayer guest = Multiplayer.guest;
-                guest.connect(ip, port);
+                try {
+                    guest.connect(ip, port);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 int tries = 0;
 
                 while (tries < 10 && !guest.isConnected()) {
                     try {
                         Thread.sleep(1000);
                         tries++;
-                        if (guest.getConnection().isConnectionFailed()) guest.connect(ip, port);
+                        if (guest.getConnection().isConnectionFailed()) {
+                            try {
+                                guest.connect(ip, port);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

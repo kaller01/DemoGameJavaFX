@@ -3,18 +3,13 @@ package game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sounds.SoundEffects;
 
 import java.util.HashMap;
 
-import server.Multiplayer;
 
 public class Main2 extends Application {
     public static double WIDTH = 1600;
@@ -23,35 +18,32 @@ public class Main2 extends Application {
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
-    GameCore game;
+    SceneManager sceneManager;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("BAMK Game");
-        ResizableCanvas canvas = new ResizableCanvas();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        StackPane root = new StackPane();
-        root.getChildren().add(canvas);
+        sceneManager = new SceneManager(primaryStage);
 
-        // Bind canvas size to stack pane size.
-        canvas.widthProperty().bind(root.widthProperty());
-        canvas.heightProperty().bind(root.heightProperty());
-        primaryStage.setScene(new Scene(root));
+        sceneManager.setupPlayerSelection();
+        sceneManager.selectMode();
+        sceneManager.setupMenu();
+        sceneManager.setupCanvas();
+        sceneManager.setupSelectPort();
+        sceneManager.setupSelectHost();
+
+        sceneManager.showPlayer();
+
 
         //Ready
         primaryStage.show();
-
-
-        System.out.println(canvas.getWidth());
-
-        //Game
-//        game = new Guest(gc, WIDTH, HEIGHT);
+        SoundEffects.init();
 
 
         //timeline and fps
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> {
-                    game.update(SECOND_DELAY);
+                    if (sceneManager.getGame() != null) sceneManager.getGame().update(SECOND_DELAY);
                 });
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
@@ -59,41 +51,40 @@ public class Main2 extends Application {
         animation.play();
 
         //Listeners
-        keyListener(primaryStage);
-        resizeListener(canvas);
-
-        game.setDimensions(WIDTH, HEIGHT);
+        keyListener();
+        resizeListener();
     }
 
-    public void keyListener(Stage primaryStage) {
-        primaryStage.getScene().setOnKeyPressed(event -> {
+    public void keyListener() {
+        sceneManager.getGameScene().setOnKeyPressed(event -> {
             String codeString = event.getCode().toString();
             if (!currentlyActiveKeys.containsKey(codeString)) {
                 currentlyActiveKeys.put(codeString, true);
-                game.setCurrentlyActiveKeys(currentlyActiveKeys);
+                if (sceneManager.getGame() != null) sceneManager.getGame().setCurrentlyActiveKeys(currentlyActiveKeys);
+                System.out.println(currentlyActiveKeys);
             }
         });
-        primaryStage.getScene().setOnKeyReleased(event -> {
+        sceneManager.getGameScene().setOnKeyReleased(event -> {
             currentlyActiveKeys.remove(event.getCode().toString());
-            game.setCurrentlyActiveKeys(currentlyActiveKeys);
+            if (sceneManager.getGame() != null) sceneManager.getGame().setCurrentlyActiveKeys(currentlyActiveKeys);
         });
 
 
     }
 
-    public void resizeListener(Canvas canvas) {
-        canvas.widthProperty().addListener((obs, oldVal, newVal) -> {
+    public void resizeListener() {
+        sceneManager.getCanvas().widthProperty().addListener((obs, oldVal, newVal) -> {
             WIDTH = (double) newVal;
             System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
-            game.setDimensions(WIDTH, HEIGHT);
+            if (sceneManager.getGame() != null) sceneManager.getGame().setDimensions(WIDTH, HEIGHT);
         });
-        canvas.heightProperty().addListener((obs, oldVal, newVal) -> {
+        sceneManager.getCanvas().heightProperty().addListener((obs, oldVal, newVal) -> {
             HEIGHT = (double) newVal;
             System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
-            game.setDimensions(WIDTH, HEIGHT);
+            if (sceneManager.getGame() != null) sceneManager.getGame().setDimensions(WIDTH, HEIGHT);
         });
-        WIDTH = canvas.getWidth();
-        HEIGHT = canvas.getHeight();
+        WIDTH = sceneManager.getCanvas().getWidth();
+        HEIGHT = sceneManager.getCanvas().getHeight();
     }
 
 

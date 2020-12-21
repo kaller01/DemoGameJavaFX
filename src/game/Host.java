@@ -15,6 +15,7 @@ public class Host extends GameCore {
     public Host(GraphicsContext gc, double width, double height, Multiplayer host) {
         super(gc, width, height);
         this.host = host;
+        host.start();
         player2 = new Speedo(WIDTH*0.9, HEIGHT*0.1, Direction.LEFT, KeySchema.WASD);
         player1 = new Heavy(WIDTH*0.1, HEIGHT*0.1, Direction.RIGHT, KeySchema.WASD);
         onResize();
@@ -26,6 +27,7 @@ public class Host extends GameCore {
             player1.move(currentlyActiveKeys);
             player2.move(currentlyActiveKeys2);
             host.getConnection().setUpdate(entityManager);
+            host.getConnection().update();
             if(host.getConnection().read() != null){
                 currentlyActiveKeys2 = (HashMap<String, Boolean>) host.getConnection().read();
             }
