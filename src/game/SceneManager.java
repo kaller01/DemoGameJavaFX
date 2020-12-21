@@ -56,10 +56,6 @@ public class SceneManager {
     }
 
     public void setupMenu() {
-<<<<<<< src/game/SceneManager.java
-        // StackPane root = new StackPane();
-=======
->>>>>>> src/game/SceneManager.java
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setMinWidth(minWidth);
@@ -102,8 +98,6 @@ public class SceneManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                game = new Host(getGraphicsContext(), minWidth, minHeight, Integer.parseInt(textfield.getText()));
-                showPlayer();
                 int port = Integer.parseInt(textfield.getText());
                 Multiplayer host = Multiplayer.host;
                 host.connect("", port);
@@ -179,7 +173,6 @@ public class SceneManager {
                 } else {
                     System.out.println("Tried to connect " + tries + " and failed");
                 }
-                showCanvas();
             }
         });
     }
@@ -193,7 +186,6 @@ public class SceneManager {
         Button button2 = new Button("The Invasion");
         Button button3 = new Button("Multiplayer | Host");
         Button button4 = new Button("Multiplayer | Guest");
-<<<<<<< src/game/SceneManager.java
 
         // button2.setOnAction(e -> { gameScene;
 
@@ -244,7 +236,7 @@ public class SceneManager {
 
     }
 
-    public void playerSelection() {
+    public void setupPlayerSelection() {
 
         HBox root = new HBox();
         root.setAlignment(Pos.CENTER);

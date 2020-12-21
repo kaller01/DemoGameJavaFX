@@ -24,21 +24,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("BAMK Game");
         sceneManager = new SceneManager(primaryStage);
-<<<<<<< src/game/Main.java
 
-        sceneManager.playerSelection();
-=======
-        
->>>>>>> src/game/Main.java
+        sceneManager.setupPlayerSelection();
         sceneManager.selectMode();
         sceneManager.setupMenu();
         sceneManager.setupCanvas();
         sceneManager.setupSelectPort();
         sceneManager.setupSelectHost();
 
-
-        primaryStage.setScene(sceneManager.getGameScene());
-        sceneManager.playerSelection();
+        sceneManager.showPlayer();
 
 
         //Ready
