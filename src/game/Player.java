@@ -6,9 +6,9 @@ import sounds.SoundEffects;
 import java.util.HashMap;
 
 public class Player extends Entity {
-    protected HashMap<String, String> keySchema = new HashMap<>();
+    protected HashMap<String, String> keySchema;
     protected double acceleration = 600;
-    protected double projectileVx = 500;
+    protected double projectileV = 500;
     protected double cooldown = 0.2;
     protected double cooldownTimer = 0;
     protected double projectileReloadTime = 1;
@@ -18,42 +18,17 @@ public class Player extends Entity {
     protected double projectileCapacity = 6;
     protected double projectiles = projectileCapacity;
     protected double projectileDamage = 1;
+    protected Direction direction;
     protected Boolean hold = false;
 
-    public Player(int number) {
+    public Player(Double x, Double y, Direction direction, KeySchema keySchema) {
         super();
+        this.x = x;
+        this.y = y;
+        this.keySchema = keySchema.getKeySchema();
+        this.direction = direction;
         vMax = 200;
         size = 30;
-
-        //References the same memory. Should work because it isn't a copy
-        this.number = number;
-        entityManager.addPlayer(this);
-
-        switch (number) {
-            case 1:
-                keySchema.put("UP", "W");
-                keySchema.put("DOWN", "S");
-                keySchema.put("LEFT", "A");
-                keySchema.put("RIGHT", "D");
-                keySchema.put("SHOOT", "SPACE");
-                x = 100;
-                y = 100;
-                break;
-            case 2:
-                keySchema.put("UP", "UP");
-                keySchema.put("DOWN", "DOWN");
-                keySchema.put("LEFT", "LEFT");
-                keySchema.put("RIGHT", "RIGHT");
-                keySchema.put("SHOOT", "NUMPAD0");
-                this.projectileVx = -this.projectileVx;
-                x = 1000;
-                y = 100;
-                break;
-        }
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     @Override
@@ -126,10 +101,7 @@ public class Player extends Entity {
     protected void shoot() {
         if (isLoaded()) {
             SoundEffects.play(SoundEffects.getFire1());
-            double xComp;
-            if (projectileVx > 0) xComp = getSize() * 1.5;
-            else xComp = -getSize();
-            new Projectile(getX() + xComp, getY() - getSize() / 3, projectileVx + vx, vy, projectileDamage);
+            new Projectile(getX() + (getSize()*1.5*direction.getX()), getY() + (getSize()*1.5*direction.getY()), (projectileV*direction.getX()) + vx, vy + (projectileV*direction.getY()), projectileDamage);
             cooldownTimer = cooldown;
             projectiles--;
         }

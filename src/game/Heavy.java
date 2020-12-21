@@ -9,8 +9,8 @@ public class Heavy extends Player implements SpecialAbility {
     double chargeTime = 1;
     double charge = 0;
 
-    Heavy(int number) {
-        super(number);
+    Heavy(Double x, Double y, Direction direction, KeySchema keySchema) {
+        super(x, y, direction, keySchema);
         projectileCapacity = 6;
         projectileReloadTimer = 1;
     }
@@ -25,7 +25,7 @@ public class Heavy extends Player implements SpecialAbility {
             //Slows speed while charging
             vMax = 50;
             //Makes sure the ammo doesnt reload while charging
-            if (chargeTimer > chargeTime*0.5) projectileReloadTimer = 1;
+            if (chargeTimer > chargeTime * 0.5) projectileReloadTimer = 1;
             chargeTimer += deltaTime;
             System.out.println(chargeTimer);
             if (chargeTimer >= chargeTime) {
@@ -77,10 +77,7 @@ public class Heavy extends Player implements SpecialAbility {
 
     public void shootCharge() {
         SoundEffects.play(SoundEffects.getFire1());
-        double xComp;
-        if (projectileVx > 0) xComp = getSize() * 1.5;
-        else xComp = -getSize();
-        new HeavyProjectile(getX() + xComp, getY() - getSize() / 3, projectileVx + vx, vy, charge);
+        new HeavyProjectile(getX() + (getSize() * 1.5 * direction.getX()), getY() + (getSize() * 1.5 * direction.getY()), (projectileV * direction.getX()) + vx, vy + (projectileV * direction.getY()), charge);
         charge = 0;
         chargeTimer = 0;
         projectileReloadTimer = 1;

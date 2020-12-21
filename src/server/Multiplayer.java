@@ -1,5 +1,7 @@
 package server;
 
+import java.io.IOException;
+
 public enum Multiplayer {
     host(true), guest(false);
     P2P connection;
@@ -11,15 +13,27 @@ public enum Multiplayer {
         this.isHost = isHost;
     }
 
-    public void start(String ip, int port){
+    public void connect(String ip, int port){
         if(isHost) connection = new Server(port);
         else connection = new Client(ip,port);
+        start();
+    }
+
+    public void start(){
         thread = new P2PThread(connection);
         thread.start();
     }
 
     public P2P getConnection(){
         return connection;
+    }
+
+    public void stop(){
+        try {
+            connection.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Boolean isConnected(){

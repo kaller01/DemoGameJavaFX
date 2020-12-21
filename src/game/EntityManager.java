@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
@@ -10,8 +9,6 @@ public class EntityManager implements Serializable {
     private List<Entity> entities = new ArrayList<>();
     private HashSet<Entity> collidedEntities = new HashSet<>();
     private HashSet<Entity> entitiesToRemove = new HashSet<>();
-    //Only players
-    private HashMap<Integer, Player> players = new HashMap<>();
 
     /**
      * Adds entity to the entityManager. This should only be called from the entity itself
@@ -22,28 +19,6 @@ public class EntityManager implements Serializable {
         entities.add(entity);
     }
 
-    /**
-     * Sets the acceleration for all players based on which keys are pressed.
-     * All players have specific key schemas.
-     *
-     * @param keys
-     */
-    public void movePlayers(HashMap<String, Boolean> keys) {
-        players.forEach((number, player) -> {
-            player.move(keys);
-        });
-    }
-
-    /**
-     * Gets player based on number.
-     * Usually 1 and 2
-     *
-     * @param number
-     * @return
-     */
-    public Player getPlayer(int number) {
-        return players.get(number);
-    }
 
     /**
      * Updates all entities based on deltaTime.
@@ -74,16 +49,6 @@ public class EntityManager implements Serializable {
      */
     public void drawAll() {
         entities.forEach((entity -> entity.draw()));
-    }
-
-    /**
-     * Adds the player
-     *
-     * @param player
-     */
-    public void addPlayer(Player player) {
-//        entities.add(player);
-        players.put(player.getNumber(), player);
     }
 
     /**
@@ -122,7 +87,6 @@ public class EntityManager implements Serializable {
         return "EntityManager{" +
                 "entities=" + entities +
                 ", collidedEntities=" + collidedEntities +
-                ", players=" + players +
                 '}';
     }
 }

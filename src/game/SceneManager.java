@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import server.Multiplayer;
 
 public class SceneManager {
     GameCore game;
@@ -50,7 +51,6 @@ public class SceneManager {
     }
 
     public void setupMenu() {
-        // StackPane root = new StackPane();
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setMinWidth(minWidth);
@@ -93,8 +93,27 @@ public class SceneManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                game = new Host(getGraphicsContext(), minWidth, minHeight, Integer.parseInt(textfield.getText()));
-                showCanvas();
+                int port = Integer.parseInt(textfield.getText());
+                Multiplayer host = Multiplayer.host;
+                host.connect("", port);
+
+                int tries = 0;
+
+                while (tries < 10 && !host.isConnected()) {
+                    try {
+                        Thread.sleep(1000);
+                        tries++;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (host.isConnected()) {
+                    game = new Host(getGraphicsContext(), minWidth, minHeight, host);
+                    showCanvas();
+                } else {
+                    System.out.println("Waited for  " + tries + " seconds and no one connected");
+                    host.stop();
+                }
             }
         });
     }
@@ -128,6 +147,27 @@ public class SceneManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                String ip = textField2.getText();
+                int port = Integer.parseInt(textfield.getText());
+                Multiplayer guest = Multiplayer.guest;
+                guest.connect(ip, port);
+                int tries = 0;
+
+                while (tries < 10 && !guest.isConnected()) {
+                    try {
+                        Thread.sleep(1000);
+                        tries++;
+                        if (guest.getConnection().isConnectionFailed()) guest.connect(ip, port);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (guest.isConnected()) {
+                    game = new Guest(getGraphicsContext(), minWidth, minHeight, guest);
+                    showCanvas();
+                } else {
+                    System.out.println("Tried to connect " + tries + " and failed");
+                }
                 game = new Guest(getGraphicsContext(), minWidth, minHeight, textField2.getText(),
                         Integer.parseInt(textfield.getText()));
                 showCanvas();
@@ -145,14 +185,11 @@ public class SceneManager {
         Button button3 = new Button("Multiplayer | Host");
         Button button4 = new Button("Multiplayer | Guest");
 
-        // button2.setOnAction(e -> { gameScene;
-
-        // });
-
         Label SelectMode = new Label("Select mode");
         root.getChildren().add(SelectMode);
 
         // Adding buttons horizontally
+
         HBox hbox = new HBox(button1, button2, button3, button4);
         hbox.setSpacing(30);
 
@@ -194,6 +231,7 @@ public class SceneManager {
 
     }
 
+
     public void showCanvas() {
         stage.setScene(gameScene);
     }
@@ -204,7 +242,6 @@ public class SceneManager {
 
     public void ShowMode() {
         stage.setScene(modeScene);
-
     }
 
     public void showSelectPort() {
@@ -216,7 +253,7 @@ public class SceneManager {
     }
 
     public Scene getGameScene() {
-        return startScene;
+        return gameScene;
     }
 
     public GraphicsContext getGraphicsContext() {
