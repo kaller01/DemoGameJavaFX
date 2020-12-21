@@ -6,8 +6,11 @@ import game.Player;
 import java.io.*;
 import java.net.*;
 
+/**
+ * Server for Peer to Peer
+ */
 public class Server extends P2P {
-    int port = 3200;
+    int port;
     Socket socket;
     public ServerSocket serverSocket;
     OutputStream outputStream;
@@ -17,9 +20,12 @@ public class Server extends P2P {
         this.port = port;
     }
 
-    public void connect() throws IOException {
-
-//        try {
+    /**
+     * Opens the server and waits for a client to connect
+     * WARNING: Method will be stuck until a client has connected.
+     * @throws IOException
+     */
+    public void connect() throws IOException, SocketException {
             serverSocket = new ServerSocket(port);
             System.out.println("Server is listening on port " + port);
             socket = serverSocket.accept();
@@ -30,13 +36,12 @@ public class Server extends P2P {
             outputStream = socket.getOutputStream();
             output = new ObjectOutputStream(outputStream);
             isConnected = true;
-
-//        } catch (IOException ex) {
-//            System.out.println("Server exception: " + ex.getMessage());
-//            ex.printStackTrace();
-//        }
     }
 
+    /**
+     * Stops the server
+     * @throws IOException
+     */
     public void stop() throws IOException {
         serverSocket.close();
     }

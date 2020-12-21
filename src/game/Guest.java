@@ -6,15 +6,29 @@ import server.Multiplayer;
 
 import java.util.HashMap;
 
+/**
+ * Gamemode where the this computer acts as client.
+ * This gamemode only does rendering of EntityManager which is sent from the host
+ */
 public class Guest extends GameCore {
     Multiplayer guest;
 
+    /**
+     *
+     * @param gc canvas graphicscontext
+     * @param width of canvas
+     * @param height height of canvas
+     * @param guest Must already be connected
+     */
     public Guest(GraphicsContext gc, double width, double height, Multiplayer guest) {
         super(gc, width, height);
         this.guest = guest;
         onResize();
     }
 
+    /**
+     * Updates the dimensions for the game
+     */
     @Override
     void onResize() {
         if(entityManager != null){
@@ -22,6 +36,10 @@ public class Guest extends GameCore {
         }
     }
 
+    /**
+     * Updates the game if guest is connected
+     * @param elapsedTime
+     */
     @Override
     public void update(double elapsedTime) {
         level.draw();

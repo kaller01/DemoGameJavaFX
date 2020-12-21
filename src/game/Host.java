@@ -2,16 +2,23 @@ package game;
 
 import javafx.scene.canvas.GraphicsContext;
 import server.Multiplayer;
-import server.Server;
-
 import java.util.HashMap;
 
+/**
+ * Multiplayer gamemode where this gamemode is the host which is responsible for doing all the computation
+ */
 public class Host extends GameCore {
     Player player1;
     Player player2;
     Multiplayer host;
     private HashMap<String, Boolean> currentlyActiveKeys2 = new HashMap<>();
 
+    /**
+     * @param gc
+     * @param width
+     * @param height
+     * @param host Must already be connected
+     */
     public Host(GraphicsContext gc, double width, double height, Multiplayer host) {
         super(gc, width, height);
         this.host = host;
@@ -21,6 +28,10 @@ public class Host extends GameCore {
         onResize();
     }
 
+    /**
+     * Updates the game if host is connected
+     * @param elapsedTime
+     */
     public void update(double elapsedTime) {
         super.update(elapsedTime);
         if(host.isConnected()){
@@ -32,12 +43,11 @@ public class Host extends GameCore {
                 currentlyActiveKeys2 = (HashMap<String, Boolean>) host.getConnection().read();
             }
         }
-
-
-
-
     }
 
+    /**
+     * Resizes the game
+     */
     public void onResize() {
         super.onResize();
         player1.setBorder(0, 0, WIDTH/2, HEIGHT);

@@ -2,6 +2,9 @@ package game;
 
 import java.util.HashMap;
 
+/**
+ * Key schema for controlling UP, DOWN, LEFT, RIGHT and SHOOT on a player, or any entity which uses it.
+ */
 public enum KeySchema {
     WASD("W","S","A","D","SPACE"), ARROWS("UP","DOWN","LEFT","RIGHT","NUMPAD0");
 
@@ -15,6 +18,9 @@ public enum KeySchema {
                  keySchema.put("SHOOT", shoot);
      }
 
+    /**
+     * @return selected keyschema
+     */
     public HashMap<String, String> getKeySchema() {
         return keySchema;
     }

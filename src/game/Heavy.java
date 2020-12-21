@@ -3,23 +3,40 @@ package game;
 import javafx.scene.paint.Color;
 import sounds.SoundEffects;
 
-//
+/**
+ * Type of Player
+ */
 public class Heavy extends Player implements SpecialAbility {
     double chargeTimer = 0;
     double chargeTime = 1;
     double charge = 0;
 
+    /**
+     * @param x spawn location x
+     * @param y spawn location y
+     * @param direction shooting direction
+     * @param keySchema controlls for player
+     */
     Heavy(Double x, Double y, Direction direction, KeySchema keySchema) {
         super(x, y, direction, keySchema);
         projectileCapacity = 6;
         projectileReloadTimer = 1;
     }
 
+    /**
+     * Updates the player
+     * velocity, location and timers.
+     * @param deltaTime
+     */
     public void update(double deltaTime) {
         super.update(deltaTime);
         updateCharge(deltaTime);
     }
 
+    /**
+     * Method which takes care of using the special ability
+     * @param deltaTime
+     */
     public void updateCharge(double deltaTime) {
         if (hold) {
             //Slows speed while charging
@@ -43,6 +60,9 @@ public class Heavy extends Player implements SpecialAbility {
         }
     }
 
+    /**
+     * Draws the player
+     */
     @Override
     public void draw() {
         double stroke = getSize() * 0.07;
@@ -63,6 +83,12 @@ public class Heavy extends Player implements SpecialAbility {
         }
     }
 
+    /**
+     * Should be used when the player wants to shoot
+     * Also takes care of the special ability charge
+     * @param key true if key is pressed
+     */
+    @Override
     protected void prepareShoot(Boolean key) {
         if (key) {
             //Makes sure you can't hold in the button
@@ -75,6 +101,9 @@ public class Heavy extends Player implements SpecialAbility {
         }
     }
 
+    /**
+     * Shoots the charge
+     */
     public void shootCharge() {
         SoundEffects.play(SoundEffects.getFire1());
         new HeavyProjectile(getX() + (getSize() * 1.5 * direction.getX()), getY() + (getSize() * 1.5 * direction.getY()), (projectileV * direction.getX()) + vx, vy + (projectileV * direction.getY()), charge);

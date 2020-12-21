@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class Main extends Application {
     public static double WIDTH = 1600;
     public static double HEIGHT = 800;
-    public static final int FRAMES_PER_SECOND = 60;
+    public static final int FRAMES_PER_SECOND = 100;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
@@ -25,13 +25,13 @@ public class Main extends Application {
         primaryStage.setTitle("BAMK Game");
         sceneManager = new SceneManager(primaryStage);
 
+        //Setups all the scenes
         sceneManager.setupPlayerSelection();
         sceneManager.selectMode();
         sceneManager.setupMenu();
         sceneManager.setupCanvas();
         sceneManager.setupSelectPort();
         sceneManager.setupSelectHost();
-
         sceneManager.showPlayer();
 
 
