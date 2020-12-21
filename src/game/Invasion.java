@@ -15,7 +15,6 @@ public class Invasion extends GameCore {
 
 
 
-
     }
 
     public void update(double elapsedTime) {

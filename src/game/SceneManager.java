@@ -8,14 +8,18 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.Multiplayer;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 public class SceneManager {
     GameCore game;
@@ -24,6 +28,7 @@ public class SceneManager {
     Scene modeScene;
     Scene selectPort;
     Scene selectHost;
+    Scene playerScene;
     ResizableCanvas canvas;
     GraphicsContext gc;
     Stage stage;
@@ -51,6 +56,10 @@ public class SceneManager {
     }
 
     public void setupMenu() {
+<<<<<<< src/game/SceneManager.java
+        // StackPane root = new StackPane();
+=======
+>>>>>>> src/game/SceneManager.java
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setMinWidth(minWidth);
@@ -66,7 +75,7 @@ public class SceneManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                ShowMode();
+                showPlayer();
             }
         });
     }
@@ -93,6 +102,8 @@ public class SceneManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                game = new Host(getGraphicsContext(), minWidth, minHeight, Integer.parseInt(textfield.getText()));
+                showPlayer();
                 int port = Integer.parseInt(textfield.getText());
                 Multiplayer host = Multiplayer.host;
                 host.connect("", port);
@@ -182,12 +193,16 @@ public class SceneManager {
         Button button2 = new Button("The Invasion");
         Button button3 = new Button("Multiplayer | Host");
         Button button4 = new Button("Multiplayer | Guest");
+<<<<<<< src/game/SceneManager.java
 
-        Label SelectMode = new Label("Select mode");
+        // button2.setOnAction(e -> { gameScene;
+
+        // });
+
+        Label SelectMode = new Label("Select game mode");
         root.getChildren().add(SelectMode);
 
         // Adding buttons horizontally
-
         HBox hbox = new HBox(button1, button2, button3, button4);
         hbox.setSpacing(30);
 
@@ -229,6 +244,75 @@ public class SceneManager {
 
     }
 
+    public void playerSelection() {
+
+        HBox root = new HBox();
+        root.setAlignment(Pos.CENTER);
+        root.setMinHeight(minHeight);
+        root.setMinWidth(minWidth);
+
+        Image imgHeavy = new Image("/Image/Player1.jpg", 100, 100, false, false);
+        Image imgSpeedo = new Image("/Image/Player2.jpg", 100, 100, false, false);
+
+        ImageView imgVHeavy = new ImageView(imgHeavy);
+        ImageView imgVSpeedo = new ImageView(imgSpeedo);
+
+        root.getChildren().addAll(imgVHeavy, imgVSpeedo);
+
+        Button button1 = new Button("Heavy");
+        Button button2 = new Button("Speedo");
+        Button button3 = new Button("Player 3");
+
+        button1.setGraphic(imgVHeavy);
+        button2.setGraphic(imgVSpeedo);
+        //button3.setGraphic(imgVSpeedo);
+
+        button1.setContentDisplay(ContentDisplay.TOP);
+        button2.setContentDisplay(ContentDisplay.TOP);
+        //button3.setContentDisplay(ContentDisplay.TOP);
+
+
+        HBox hbox = new HBox(button1, button2, button3);
+        hbox.setSpacing(250);
+        hbox.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(hbox);
+
+        Label label = new Label("Select Player");
+        label.setAlignment(Pos.TOP_CENTER);
+        root.getChildren().addAll(label);
+
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(label, hbox);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setMinHeight(minHeight);
+        vbox.setMinWidth(minWidth);
+
+        playerScene = new Scene(vbox);
+        playerScene.getStylesheets().add("/css/start.css");
+
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showMode();
+            }
+        });
+
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showMode();
+            }
+        });
+
+        button3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showMode();
+            }
+        });
+
+    }
+
 
     public void showCanvas() {
         stage.setScene(gameScene);
@@ -238,9 +322,13 @@ public class SceneManager {
         stage.setScene(startScene);
     }
 
-    public void ShowMode() {
+
+    public void showMode() {
         stage.setScene(modeScene);
     }
+
+    public void showPlayer(){stage.setScene(playerScene);}
+
 
     public void showSelectPort() {
         stage.setScene(selectPort);

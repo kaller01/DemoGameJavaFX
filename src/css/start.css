@@ -22,3 +22,7 @@ TextField {
     -fx-border-width: 100px;
     -fx-background-color: #CCFF99;
 }
+
+.button:hover {
+    -fx-background-color: #CCFF00;
+}

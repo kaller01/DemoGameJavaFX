@@ -42,5 +42,4 @@ public class SoundEffects {
         new MediaPlayer(media).play();
     }
 
-
 }
