@@ -9,17 +9,16 @@ public enum Level {
 
     dual("dual"), invasion("invasion");
 
-    String mood;
+    String mode;
     static GraphicsContext gc;
     double WIDTH, HEIGHT;
 
 
     /**
-     *
-     * @param mood
+     * @param mode
      */
-    Level(String mood) {
-        this.mood= mood;
+    Level(String mode) {
+        this.mode= mode;
     }
 
 
@@ -27,7 +26,7 @@ public enum Level {
      * Switching Background
      */
     public void draw(){
-        switch (mood){
+        switch (mode){
             case "dual":
                 drawDual();
                 break;
@@ -55,8 +54,6 @@ public enum Level {
         gc.fillRect(WIDTH * 0.495, 0, WIDTH * 0.01, HEIGHT);
         //The line at the bottom
         gc.fillRect(0, HEIGHT * 0.991, WIDTH, HEIGHT * 0.9);
-
-
         this.gc.stroke();
 
     }

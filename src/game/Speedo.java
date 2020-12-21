@@ -2,9 +2,18 @@ package game;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Type of Player
+ */
 public class Speedo extends Player {
 
 
+    /**
+     * @param x spawn location x
+     * @param y spawn location y
+     * @param direction shooting direction
+     * @param keySchema controlls for player
+     */
     public Speedo(Double x, Double y, Direction direction, KeySchema keySchema) {
         super(x, y, direction, keySchema);
         projectiles = projectileCapacity = 8;
@@ -14,6 +23,9 @@ public class Speedo extends Player {
         acceleration *= 1.5;
     }
 
+    /**
+     * Draws the player
+     */
     public void draw() {
         double stroke = getSize() * 0.07;
         gc.setFill(new Color(0, 1, 0, ((hp + 3) / 8)));

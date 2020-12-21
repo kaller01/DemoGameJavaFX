@@ -2,11 +2,13 @@ package server;
 
 import java.io.IOException;
 
-public class P2PThread extends Thread {
+/**
+ * Thread for handling Peer to peer listening
+ */
+public class ListenThread extends Thread {
     private P2P connection;
-    private boolean exit;
 
-    public P2PThread(P2P connection) {
+    public ListenThread(P2P connection) {
         this.connection = connection;
     }
 
@@ -19,9 +21,5 @@ public class P2PThread extends Thread {
                 System.out.println("Not connected");
             }
         }
-    }
-
-    public void exit() {
-        exit = true;
     }
 }

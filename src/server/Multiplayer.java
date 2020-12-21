@@ -2,34 +2,51 @@ package server;
 
 import java.io.IOException;
 
+/**
+ * For handling Multiplayer connection
+ */
 public enum Multiplayer {
     host(true), guest(false);
-    P2P connection;
-    P2PThread thread;
+    private P2P connection;
+    private ListenThread thread;
+    private Boolean isHost;
 
-    public Boolean isHost;
-
-    Multiplayer(Boolean isHost){
+    Multiplayer(Boolean isHost) {
         this.isHost = isHost;
     }
 
+    /**
+     * Connects
+     * @param ip of host
+     * @param port for connection
+     * @throws IOException
+     */
     public void connect(String ip, int port) throws IOException {
-        if(isHost) connection = new Server(port);
-        else connection = new Client(ip,port);
-        connection.connect();
+        if (isHost) connection = new Server(port);
+        else connection = new Client(ip, port);
+        new ConnectThread(connection).start();
     }
 
-    public void start(){
+    /**
+     * Starts listening thead
+     */
+    public void start() {
         System.out.print("STARTING THREAD");
-        thread = new P2PThread(connection);
+        thread = new ListenThread(connection);
         thread.start();
     }
 
-    public P2P getConnection(){
+    /**
+     * @return connection
+     */
+    public P2P getConnection() {
         return connection;
     }
 
-    public void stop(){
+    /**
+     * Stops the connection
+     */
+    public void stop() {
         try {
             connection.stop();
         } catch (IOException e) {
@@ -37,7 +54,10 @@ public enum Multiplayer {
         }
     }
 
-    public Boolean isConnected(){
+    /**
+     * @return true if connected
+     */
+    public Boolean isConnected() {
         return getConnection().isConnected();
     }
 }

@@ -5,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.UnknownHostException;
 
+/**
+ * Handles Peer to Peer connection
+ */
 abstract public class P2P {
     Object lastObject;
     Object objectToSend = new Object();
@@ -15,6 +18,10 @@ abstract public class P2P {
 
     public abstract void stop() throws IOException;
     public abstract void connect() throws IOException;
+
+    /**
+     * Listens for socket
+     */
     public void listen(){
         try {
             lastObject = input.readObject();
@@ -22,6 +29,10 @@ abstract public class P2P {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Updates outputstream
+     */
     public void update() {
         try {
             output.reset();
@@ -32,18 +43,33 @@ abstract public class P2P {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Set what object to update
+     * @param obj
+     */
     public void setUpdate(Object obj){
         this.objectToSend = obj;
     }
 
+    /**
+     * Returns lastobject that was read
+     * @return
+     */
     public Object read(){
         return lastObject;
     }
 
+    /**
+     * @return true if connected
+     */
     public Boolean isConnected() {
         return isConnected;
     }
 
+    /**
+     * @return true if connection has failed
+     */
     public Boolean isConnectionFailed(){
         return connectionFailed;
     }

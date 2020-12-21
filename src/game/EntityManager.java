@@ -5,10 +5,9 @@ import java.util.*;
 import java.util.List;
 
 public class EntityManager implements Serializable {
-    //Both players and projectiles
     private List<Entity> entities = new ArrayList<>();
-    private HashSet<Entity> collidedEntities = new HashSet<>();
     private HashSet<Entity> entitiesToRemove = new HashSet<>();
+    double WIDTH, HEIGHT;
 
     /**
      * Adds entity to the entityManager. This should only be called from the entity itself
@@ -17,6 +16,15 @@ public class EntityManager implements Serializable {
      */
     public void addEntity(Entity entity) {
         entities.add(entity);
+    }
+
+    /**
+     * Sets the border of the entity to the bounds of the game
+     * Since the entity does not know of the game size, this is an easy way to let it know.
+     * @param entity
+     */
+    public void setBorderAsOuterBounds(Entity entity){
+        entity.setBorder(0, 0, WIDTH, HEIGHT);
     }
 
 
@@ -78,15 +86,21 @@ public class EntityManager implements Serializable {
         entitiesToRemove.add(entity);
     }
 
+    /**
+     * Scales Entity
+     * @param width
+     * @param height
+     */
     public void onResize(double width, double height) {
         Entity.setScale(width / 1424);
+        WIDTH = width;
+        HEIGHT = height;
     }
 
     @Override
     public String toString() {
         return "EntityManager{" +
                 "entities=" + entities +
-                ", collidedEntities=" + collidedEntities +
                 '}';
     }
 }

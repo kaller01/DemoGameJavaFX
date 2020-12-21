@@ -5,7 +5,7 @@ import sounds.SoundEffects;
 
 import java.util.HashMap;
 
-public class Player extends Entity {
+public abstract class Player extends Entity {
     protected HashMap<String, String> keySchema;
     protected double acceleration = 600;
     protected double projectileV = 500;
@@ -13,7 +13,6 @@ public class Player extends Entity {
     protected double cooldownTimer = 0;
     protected double projectileReloadTime = 1;
     protected double projectileReloadTimer = 1;
-    protected int number;
     protected double hp = 5;
     protected double projectileCapacity = 6;
     protected double projectiles = projectileCapacity;
@@ -21,6 +20,12 @@ public class Player extends Entity {
     protected Direction direction;
     protected Boolean hold = false;
 
+    /**
+     * @param x spawn position x
+     * @param y spawn position y
+     * @param direction for shooting
+     * @param keySchema what keys to use to move player
+     */
     public Player(Double x, Double y, Direction direction, KeySchema keySchema) {
         super();
         this.x = x;
@@ -31,14 +36,14 @@ public class Player extends Entity {
         size = 30;
     }
 
-    @Override
-    public void draw() {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, getSize(), getSize());
-        gc.setFill(Color.RED);
-        gc.fillRect(getX(), getY(), 1, 1);
-    }
 
+    @Override
+    public abstract void draw();
+
+    /**
+     * Sets the acceleration for the player and shoots.
+     * @param currentlyActiveKeys
+     */
     public void move(HashMap<String, Boolean> currentlyActiveKeys) {
         if (currentlyActiveKeys.containsKey(keySchema.get("UP"))) {
             ay = -1 * acceleration;
@@ -56,10 +61,14 @@ public class Player extends Entity {
             ax = 0;
         }
 
+        //Method seperated for easier overide for subclasses
         prepareShoot(currentlyActiveKeys.containsKey(keySchema.get("SHOOT")));
     }
 
-
+    /**
+     * Updates the player, velocity and location mostly.
+     * @param deltaTime
+     */
     @Override
     public void update(double deltaTime) {
         super.update(deltaTime);
@@ -71,6 +80,10 @@ public class Player extends Entity {
         this.updateTimers(deltaTime);
     }
 
+    /**
+     * Updates the timers
+     * @param deltaTime
+     */
     private void updateTimers(double deltaTime) {
         if (cooldownTimer >= 0) cooldownTimer -= deltaTime;
         if (cooldownTimer < 0) cooldownTimer = 0;
@@ -83,10 +96,17 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * @return if its loaded
+     */
     protected boolean isLoaded() {
         return cooldownTimer <= 0 && projectiles > 0;
     }
 
+    /**
+     * Should be used when the player wants to shoot
+     * @param key true if key is pressed
+     */
     protected void prepareShoot(Boolean key) {
         if (key) {
             //Makes sure you can't hold in the button
@@ -97,7 +117,9 @@ public class Player extends Entity {
         }
     }
 
-
+    /**
+     * Should not be called
+     */
     protected void shoot() {
         if (isLoaded()) {
             SoundEffects.play(SoundEffects.getFire1());
@@ -107,18 +129,31 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Validates it and sets it
+     * @param x
+     */
     @Override
     public void setX(double x) {
         if (isInsideBorderX(x)) this.x = x;
         else this.vx = -this.vx;
     }
 
+    /**
+     * Validates it and sets it
+     * @param y
+     */
     @Override
     public void setY(double y) {
         if (isInsideBorderY(y)) this.y = y;
         else this.vy = -this.vy;
     }
 
+    /**
+     * When this player has collided with an entity.
+     * Only does something if the entity is a projectile
+     * @param entity which has been collided with
+     */
     @Override
     public void onCollision(Entity entity) {
         if (entity instanceof Projectile) {
@@ -128,8 +163,6 @@ public class Player extends Entity {
                 SoundEffects.play(SoundEffects.getGameover());
             } else SoundEffects.play(SoundEffects.getHit());
         }
-
-
     }
 
 }
