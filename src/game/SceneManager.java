@@ -168,8 +168,6 @@ public class SceneManager {
                 } else {
                     System.out.println("Tried to connect " + tries + " and failed");
                 }
-                game = new Guest(getGraphicsContext(), minWidth, minHeight, textField2.getText(),
-                        Integer.parseInt(textfield.getText()));
                 showCanvas();
             }
         });
