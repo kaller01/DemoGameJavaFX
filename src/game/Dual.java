@@ -5,8 +5,8 @@ import sounds.SoundEffects;
 
 public class Dual extends GameCore {
 
-    Player player1 = new Heavy(1);
-    Player player2 = new Speedo(2);
+    Player player1 = new Heavy(WIDTH*0.1, HEIGHT*0.1, Direction.RIGHT, KeySchema.WASD);
+    Player player2 = new Speedo(WIDTH*0.9, HEIGHT*0.1, Direction.LEFT, KeySchema.ARROWS);
 
     public Dual(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
@@ -14,9 +14,9 @@ public class Dual extends GameCore {
 
     public void update(double elapsedTime) {
         super.update(elapsedTime);
-//        player1.move(currentlyActiveKeys);
-//        player2.move(currentlyActiveKeys);
-        entityManager.movePlayers(currentlyActiveKeys);
+        player1.move(currentlyActiveKeys);
+        player2.move(currentlyActiveKeys);
+
 
 
 

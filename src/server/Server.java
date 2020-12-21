@@ -9,20 +9,17 @@ import java.net.*;
 public class Server extends P2P {
     int port = 3200;
     Socket socket;
-    ServerSocket serverSocket;
+    public ServerSocket serverSocket;
     OutputStream outputStream;
     InputStream inputStream;
-    ObjectInputStream input;
-
-    public EntityManager manager = new EntityManager();
 
     public Server(int port){
         this.port = port;
     }
 
-    public void connect() {
+    public void connect() throws IOException {
 
-        try {
+//        try {
             serverSocket = new ServerSocket(port);
             System.out.println("Server is listening on port " + port);
             socket = serverSocket.accept();
@@ -34,18 +31,13 @@ public class Server extends P2P {
             output = new ObjectOutputStream(outputStream);
             isConnected = true;
 
-        } catch (IOException ex) {
-            System.out.println("Server exception: " + ex.getMessage());
-            ex.printStackTrace();
-        }
+//        } catch (IOException ex) {
+//            System.out.println("Server exception: " + ex.getMessage());
+//            ex.printStackTrace();
+//        }
     }
 
-    public void listen(){
-        try {
-            lastObject = input.readObject();
-        } catch (IOException | ClassNotFoundException e){
-            System.out.println(e);
-        }
+    public void stop() throws IOException {
+        serverSocket.close();
     }
-
 }

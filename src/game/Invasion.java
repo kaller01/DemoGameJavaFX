@@ -10,7 +10,7 @@ public class Invasion extends GameCore {
         super(gc, width, height);
         Level.gc = gc;
         level = Level.invasion;
-        player = new Heavy(1);
+        player = new Heavy(WIDTH*0.1,HEIGHT*0.1, Direction.RIGHT, KeySchema.WASD);
 
 
 
