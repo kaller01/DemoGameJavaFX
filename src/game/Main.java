@@ -3,6 +3,7 @@ package game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sounds.SoundEffects;
@@ -23,7 +24,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("BAMK Game");
         sceneManager = new SceneManager(primaryStage);
+<<<<<<< src/game/Main.java
+
+        sceneManager.playerSelection();
+=======
         
+>>>>>>> src/game/Main.java
         sceneManager.selectMode();
         sceneManager.setupMenu();
         sceneManager.setupCanvas();
@@ -32,7 +38,7 @@ public class Main extends Application {
 
 
         primaryStage.setScene(sceneManager.getGameScene());
-        sceneManager.showStart();
+        sceneManager.playerSelection();
 
 
         //Ready
