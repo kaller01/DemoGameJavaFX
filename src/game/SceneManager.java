@@ -102,27 +102,16 @@ public class SceneManager {
                 int port = Integer.parseInt(textfield.getText());
                 Multiplayer host = Multiplayer.host;
                 try {
+                    System.out.println("TRYING TO START");
                     host.connect("", port);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                int tries = 0;
-
-                while (tries < 10 && !host.isConnected()) {
-                    try {
-                        Thread.sleep(1000);
-                        tries++;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                System.out.println("I GOT HERE");
                 if (host.isConnected()) {
+                    System.out.println("LETS GOOO");
                     game = new Host(getGraphicsContext(), minWidth, minHeight, host);
                     showCanvas();
-                } else {
-                    System.out.println("Waited for  " + tries + " seconds and no one connected");
-                    host.stop();
                 }
             }
         });
@@ -230,8 +219,7 @@ public class SceneManager {
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                game = new Invasion(getGraphicsContext(), minWidth, minHeight);
-                showCanvas();
+                showPlayer();
             }
         });
 
@@ -268,7 +256,7 @@ public class SceneManager {
 
         Button button1 = new Button("Heavy");
         Button button2 = new Button("Speedo");
-        Button button3 = new Button("Player 3");
+//        Button button3 = new Button("Player 3");
 
         button1.setGraphic(imgVHeavy);
         button2.setGraphic(imgVSpeedo);
@@ -279,7 +267,7 @@ public class SceneManager {
         //button3.setContentDisplay(ContentDisplay.TOP);
 
 
-        HBox hbox = new HBox(button1, button2, button3);
+        HBox hbox = new HBox(button1, button2);
         hbox.setSpacing(250);
         hbox.setAlignment(Pos.CENTER);
         root.getChildren().addAll(hbox);
@@ -300,23 +288,21 @@ public class SceneManager {
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                showMode();
+                game = new Invasion(getGraphicsContext(), minWidth, minHeight);
+                ((Invasion) game).setPlayer(new Heavy(100.0,100.0, Direction.RIGHT, KeySchema.WASD));
+                showCanvas();
             }
         });
 
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                showMode();
+                game = new Invasion(getGraphicsContext(), minWidth, minHeight);
+                ((Invasion) game).setPlayer(new Speedo(100.0,100.0, Direction.RIGHT, KeySchema.WASD));
+                showCanvas();
             }
         });
 
-        button3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                showMode();
-            }
-        });
 
     }
 

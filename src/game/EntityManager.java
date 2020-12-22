@@ -39,9 +39,15 @@ public class EntityManager implements Serializable {
             en1.update(deltaTime);
             entities.forEach(en2 -> {
                 if (en1 != en2) {
-                    if (collision(en1, en2)) {
-                        en1.onCollision(en2);
-                        en2.onCollision(en1);
+//                    if (collision(en1, en2)) {
+//                        en1.onCollision(en2);
+//                        en2.onCollision(en1);
+//                    }
+                    if(en1 instanceof Hitbox && en2 instanceof Hitbox){
+                        if(en1.intersects((Hitbox) en2)){
+                            en1.onCollision(en2);
+                            en2.onCollision(en1);
+                        }
                     }
                 }
             });

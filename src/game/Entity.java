@@ -3,10 +3,11 @@ package game;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 
 abstract public class Entity implements Serializable {
-    double x, y, vx, vy, ax, ay, vMax, size;
+    double x, y, vx, vy, ax, ay, vMax, size, width, height;
     protected static double scale = 1;
     public Double[] border = new Double[4];
     protected static GraphicsContext gc;
@@ -103,6 +104,8 @@ abstract public class Entity implements Serializable {
         border[3] = yBottom;
     }
 
+
+
     /**
      * @param x
      */
@@ -144,6 +147,85 @@ abstract public class Entity implements Serializable {
 
     public static void setScale(double scaleTmp) {
         scale = scaleTmp;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public HashMap<String, Double> getRectHitbox() {
+        HashMap<String, Double> hitbox = new HashMap<>();
+        hitbox.put("x",x);
+        hitbox.put("y",y);
+        hitbox.put("width",width*scale);
+        hitbox.put("height",height*scale);
+        return hitbox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public HashMap<String, Double> getRoundHitbox() {
+        HashMap<String, Double> hitbox = new HashMap<>();
+        hitbox.put("x",x);
+        hitbox.put("y",y);
+        hitbox.put("radius",getSize()/2);
+        return hitbox;
+    }
+
+    /**
+     * This is my super cool method
+     *
+     * @param hitbox
+     * @return true if intersected with another hitbox
+     */
+    public boolean intersects(Hitbox hitbox) {
+        if (hitbox instanceof RectHitbox && this instanceof RectHitbox) {
+            var rect1 = ((RectHitbox) hitbox).getRectHitbox();
+            var rect2 = getRectHitbox();
+            if (rect1.get("x") < rect2.get("x") + rect2.get("width") &&
+                    rect1.get("x") + rect1.get("width") > rect2.get("x") &&
+                    rect1.get("y") < rect2.get("y") + rect2.get("height") &&
+                    rect1.get("y") + rect1.get("height") > rect2.get("y")) {
+                return true;
+            }
+        } else if (hitbox instanceof RoundHitbox && this instanceof RectHitbox) {
+            var circle = ((RoundHitbox) hitbox).getRoundHitbox();
+            var rect = this.getRectHitbox();
+
+            double circleDistanceX = Math.abs(circle.get("x") - rect.get("x"));
+            double circleDistanceY = Math.abs(circle.get("y") - rect.get("y"));
+
+            if (circleDistanceX > (rect.get("width") / 2 + circle.get("radius"))) {
+                return false;
+            }
+            if (circleDistanceY > (rect.get("height") / 2 + circle.get("radius"))) {
+                return false;
+            }
+
+            if (circleDistanceX <= (rect.get("width") / 2)) {
+                return true;
+            }
+            if (circleDistanceY <= (rect.get("height") / 2)) {
+                return true;
+            }
+
+            double cornerDistance_sq = Math.pow((circleDistanceX - rect.get("width") / 2), 2) +
+                    Math.pow((circleDistanceY - rect.get("height") / 2), 2);
+
+            return (cornerDistance_sq <= (Math.pow(circle.get("radius"), 2)));
+        } else if (hitbox instanceof RoundHitbox && this instanceof RoundHitbox) {
+            var circle1 = ((RoundHitbox) hitbox).getRoundHitbox();
+            var circle2 = this.getRoundHitbox();
+
+            double dx = circle1.get("x") - circle2.get("x");
+            double dy = circle1.get("y") - circle2.get("y");
+            var distance = Math.sqrt(dx * dx + dy * dy);
+
+            return (distance < circle1.get("radius") + circle2.get("radius"));
+        }
+        return false;
     }
 
 }

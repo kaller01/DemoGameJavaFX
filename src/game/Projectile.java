@@ -3,7 +3,9 @@ package game;
 
 import javafx.scene.paint.Color;
 
-public class Projectile extends Entity {
+import java.util.HashMap;
+
+public class Projectile extends Entity implements RoundHitbox {
     protected double damage;
 
     /**
@@ -34,7 +36,7 @@ public class Projectile extends Entity {
      */
     public void draw() {
         gc.setFill(Color.WHITE);
-        gc.fillRect(x, y, size*scale, size*scale);
+        gc.fillOval(x, y, size*scale, size*scale);
     }
 
     /**
@@ -56,6 +58,7 @@ public class Projectile extends Entity {
         if (isInsideBorderX(x)) this.x = x;
         else entityManager.removeEntity(this);
     }
+
 
     public double getDamage() {
         return damage;

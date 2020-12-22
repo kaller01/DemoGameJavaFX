@@ -24,7 +24,7 @@ public enum Multiplayer {
     public void connect(String ip, int port) throws IOException {
         if (isHost) connection = new Server(port);
         else connection = new Client(ip, port);
-        new ConnectThread(connection).start();
+        connection.connect();
     }
 
     /**
