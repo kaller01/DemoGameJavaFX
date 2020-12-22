@@ -141,9 +141,7 @@ abstract public class Entity implements Serializable {
         return y + getSize() / 2;
     }
 
-    public void onCollision(Entity entity) {
-        entityManager.removeEntity(this);
-    }
+
 
     public static void setScale(double scaleTmp) {
         scale = scaleTmp;

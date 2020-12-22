@@ -1,6 +1,7 @@
 package game;
 
 import javafx.scene.paint.Color;
+import sounds.SoundEffects;
 
 public class HeavyProjectile extends Projectile implements RectHitbox{
 
@@ -29,5 +30,11 @@ public class HeavyProjectile extends Projectile implements RectHitbox{
         gc.setLineWidth(stroke);
         gc.fillRect(x, y, getSize(), getSize());
         gc.strokeRect(x + stroke / 2, y + stroke / 2, getSize() - stroke, getSize() - stroke);
+    }
+
+    @Override
+    public void onCollision(Entity entity) {
+        super.onCollision(entity);
+        SoundEffects.play(SoundEffects.getEnemeydead());
     }
 }

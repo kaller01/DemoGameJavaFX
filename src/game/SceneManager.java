@@ -246,8 +246,8 @@ public class SceneManager {
         root.setMinHeight(minHeight);
         root.setMinWidth(minWidth);
 
-        Image imgHeavy = new Image("/Image/Player1.jpg", 100, 100, false, false);
-        Image imgSpeedo = new Image("/Image/Player2.jpg", 100, 100, false, false);
+        Image imgHeavy = new Image("/image/Player1.jpg", 100, 100, false, false);
+        Image imgSpeedo = new Image("/image/Player2.jpg", 100, 100, false, false);
 
         ImageView imgVHeavy = new ImageView(imgHeavy);
         ImageView imgVSpeedo = new ImageView(imgSpeedo);

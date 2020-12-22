@@ -60,6 +60,10 @@ public class Projectile extends Entity implements RoundHitbox {
     }
 
 
+    public void onCollision(Entity entity) {
+        entityManager.removeEntity(this);
+    }
+
     public double getDamage() {
         return damage;
     }

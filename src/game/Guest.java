@@ -1,7 +1,6 @@
 package game;
 
 import javafx.scene.canvas.GraphicsContext;
-import server.Client;
 import server.Multiplayer;
 
 import java.util.HashMap;

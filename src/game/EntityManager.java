@@ -39,14 +39,10 @@ public class EntityManager implements Serializable {
             en1.update(deltaTime);
             entities.forEach(en2 -> {
                 if (en1 != en2) {
-//                    if (collision(en1, en2)) {
-//                        en1.onCollision(en2);
-//                        en2.onCollision(en1);
-//                    }
                     if(en1 instanceof Hitbox && en2 instanceof Hitbox){
                         if(en1.intersects((Hitbox) en2)){
-                            en1.onCollision(en2);
-                            en2.onCollision(en1);
+                            ((Hitbox) en1).onCollision(en2);
+                            ((Hitbox) en2).onCollision(en1);
                         }
                     }
                 }
@@ -63,24 +59,6 @@ public class EntityManager implements Serializable {
      */
     public void drawAll() {
         entities.forEach((entity -> entity.draw()));
-    }
-
-    /**
-     * Checks the collision between two entities
-     *
-     * @param en1 Entity, order doesn't matter
-     * @param en2 Entity, order doesn't matter
-     * @return true if the distance is less than the biggest Entity size
-     */
-    public boolean collision(Entity en1, Entity en2) {
-        double size;
-        if (en1.getSize() > en2.getSize()) size = en1.getSize();
-        else size = en2.getSize();
-        double distance = Math.pow(en1.getX() - en2.getX(), 2) + Math.pow(en1.getY() - en2.getY(), 2);
-        if (Math.sqrt(distance) <= size / 2) {
-            return true;
-        }
-        return false;
     }
 
     /**
