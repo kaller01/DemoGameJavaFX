@@ -1,11 +1,10 @@
 package game;
 
-import javafx.scene.paint.Color;
 import sounds.SoundEffects;
 
 import java.util.HashMap;
 
-public abstract class Player extends Entity {
+public abstract class Player extends Entity implements RectHitbox {
     protected HashMap<String, String> keySchema;
     protected double acceleration = 600;
     protected double projectileV = 500;
@@ -21,8 +20,8 @@ public abstract class Player extends Entity {
     protected Boolean hold = false;
 
     /**
-     * @param x spawn position x
-     * @param y spawn position y
+     * @param x         spawn position x
+     * @param y         spawn position y
      * @param direction for shooting
      * @param keySchema what keys to use to move player
      */
@@ -34,6 +33,8 @@ public abstract class Player extends Entity {
         this.direction = direction;
         vMax = 200;
         size = 30;
+        width = size;
+        height = size;
     }
 
 
@@ -42,6 +43,7 @@ public abstract class Player extends Entity {
 
     /**
      * Sets the acceleration for the player and shoots.
+     *
      * @param currentlyActiveKeys
      */
     public void move(HashMap<String, Boolean> currentlyActiveKeys) {
@@ -67,6 +69,7 @@ public abstract class Player extends Entity {
 
     /**
      * Updates the player, velocity and location mostly.
+     *
      * @param deltaTime
      */
     @Override
@@ -82,6 +85,7 @@ public abstract class Player extends Entity {
 
     /**
      * Updates the timers
+     *
      * @param deltaTime
      */
     private void updateTimers(double deltaTime) {
@@ -105,11 +109,12 @@ public abstract class Player extends Entity {
 
     /**
      * Should be used when the player wants to shoot
+     *
      * @param key true if key is pressed
      */
     protected void prepareShoot(Boolean key) {
         if (key) {
-            //Makes sure you can't hold in the button
+            //Makes sure you can't hold in the button and spam shoot
             hold = true;
         } else if (hold) {
             shoot();
@@ -123,7 +128,8 @@ public abstract class Player extends Entity {
     protected void shoot() {
         if (isLoaded()) {
             SoundEffects.play(SoundEffects.getFire1());
-            new Projectile(getX() + (getSize()*1.5*direction.getX()), getY() + (getSize()*1.5*direction.getY()), (projectileV*direction.getX()) + vx, vy + (projectileV*direction.getY()), projectileDamage);
+            System.out.println("NEW PROJECTILE");
+            new Projectile(getX() + (getSize() * 1.5 * direction.getX()), getY() + (getSize() * 1.5 * direction.getY()), (projectileV * direction.getX()) + vx, vy + (projectileV * direction.getY()), projectileDamage);
             cooldownTimer = cooldown;
             projectiles--;
         }
@@ -131,6 +137,7 @@ public abstract class Player extends Entity {
 
     /**
      * Validates it and sets it
+     *
      * @param x
      */
     @Override
@@ -141,6 +148,7 @@ public abstract class Player extends Entity {
 
     /**
      * Validates it and sets it
+     *
      * @param y
      */
     @Override
@@ -152,6 +160,7 @@ public abstract class Player extends Entity {
     /**
      * When this player has collided with an entity.
      * Only does something if the entity is a projectile
+     *
      * @param entity which has been collided with
      */
     @Override
@@ -162,7 +171,12 @@ public abstract class Player extends Entity {
                 entityManager.removeEntity(this);
                 SoundEffects.play(SoundEffects.getGameover());
             } else SoundEffects.play(SoundEffects.getHit());
+        } else if(entity instanceof Enemy){
+            hp -= 1;
+            if (hp <= 0) {
+                entityManager.removeEntity(this);
+                SoundEffects.play(SoundEffects.getGameover());
+            } else SoundEffects.play(SoundEffects.getHit());
         }
     }
-
 }

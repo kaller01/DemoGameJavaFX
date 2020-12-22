@@ -6,7 +6,7 @@ import sounds.SoundEffects;
 /**
  * Enemy
  */
-public class Enemy extends Entity{
+public class Enemy extends Entity implements RoundHitbox{
     double v = 50;
 
     /**

@@ -32,7 +32,7 @@ public class Main extends Application {
         sceneManager.setupCanvas();
         sceneManager.setupSelectPort();
         sceneManager.setupSelectHost();
-        sceneManager.showPlayer();
+        sceneManager.showMode();
 
 
         //Ready

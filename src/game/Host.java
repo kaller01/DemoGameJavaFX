@@ -21,6 +21,7 @@ public class Host extends GameCore {
      */
     public Host(GraphicsContext gc, double width, double height, Multiplayer host) {
         super(gc, width, height);
+        level = Level.dual;
         this.host = host;
         host.start();
         player2 = new Speedo(WIDTH*0.9, HEIGHT*0.1, Direction.LEFT, KeySchema.WASD);

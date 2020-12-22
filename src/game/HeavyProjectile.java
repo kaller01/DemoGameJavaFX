@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.paint.Color;
 
-public class HeavyProjectile extends Projectile{
+public class HeavyProjectile extends Projectile implements RectHitbox{
 
 
     /**
@@ -15,6 +15,8 @@ public class HeavyProjectile extends Projectile{
     public HeavyProjectile(double x, double y, double vx, double vy, double damage) {
         super(x, y, vx, vy, damage);
         size = 40;
+        width = size;
+        height = size;
     }
 
     /**
@@ -28,6 +30,4 @@ public class HeavyProjectile extends Projectile{
         gc.fillRect(x, y, getSize(), getSize());
         gc.strokeRect(x + stroke / 2, y + stroke / 2, getSize() - stroke, getSize() - stroke);
     }
-
-
 }

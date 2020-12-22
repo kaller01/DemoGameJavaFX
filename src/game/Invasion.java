@@ -7,6 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Invasion extends GameCore {
     Player player;
+    double basewidth = WIDTH*0.05;
+    PlayerHome home = new PlayerHome(basewidth, HEIGHT);
     double counter = 0;
 
     /**
@@ -16,9 +18,7 @@ public class Invasion extends GameCore {
      */
     public Invasion(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
-        Level.gc = gc;
         level = Level.invasion;
-        player = new Heavy(WIDTH*0.1,HEIGHT*0.1, Direction.RIGHT, KeySchema.WASD);
     }
 
     /**
@@ -26,26 +26,31 @@ public class Invasion extends GameCore {
      * @param elapsedTime
      */
     public void update(double elapsedTime) {
-        level.draw();
-        player.move(currentlyActiveKeys);
+        super.update(elapsedTime);
+
+        if(player != null) player.move(currentlyActiveKeys);
 
         counter+= elapsedTime;
-        if(counter>2) {
+        if(counter>1) {
             counter = 0;
             new Enemy(WIDTH,Math.random()*HEIGHT,Direction.LEFT);
         }
-
-        entityManager.updateAll(elapsedTime);
-        entityManager.drawAll();
     }
-
 
     /**
      * When resized, do this
      */
     public void onResize() {
-        level.onResize(WIDTH, HEIGHT);
-        player.setBorder(0, 0, WIDTH, HEIGHT);
+        super.onResize();
+        player.setBorder(basewidth, 0, WIDTH, HEIGHT);
+    }
+
+    /**
+     * Choose player
+     * @param player
+     */
+    public void setPlayer(Player player){
+        this.player = player;
     }
 }
 
