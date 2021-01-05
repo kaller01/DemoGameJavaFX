@@ -4,7 +4,7 @@ import sounds.SoundEffects;
 
 import java.util.HashMap;
 
-public abstract class Player extends Entity implements RectHitbox {
+public abstract class Player extends Entity implements Hitbox {
     protected HashMap<String, String> keySchema;
     protected double acceleration = 600;
     protected double projectileV = 500;

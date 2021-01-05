@@ -6,10 +6,10 @@ import sounds.SoundEffects;
 /**
  * Type of Player
  */
-public class Heavy extends Player implements SpecialAbility {
-    double chargeTimer = 0;
-    double chargeTime = 1;
-    double charge = 0;
+public class Heavy extends Player implements RectHitbox {
+    private double chargeTimer = 0;
+    private double chargeTime = 1;
+    private double charge = 0;
 
     /**
      * @param x spawn location x

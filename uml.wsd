@@ -3,6 +3,7 @@
 Package game{
 
 
+class SceneManager
 
 class Entity{
     static entityManager
@@ -11,7 +12,6 @@ class Entity{
     update()
 }
 
-interface SpecialAbility
 
 abstract class Player{
     hp
@@ -25,38 +25,93 @@ class Heavy{
 class Speedo{
     draw()
 }
-class WIP{
-    draw()
+
+class PlayerHome
+class HeavyProjectile
+
+Enum Level {
+    DUAL
+    INVASION
 }
 
-Heavy .u.> SpecialAbility
-WIP .u.> SpecialAbility
+Interface Hitbox {
+    onCollision(Entity entity)
+}
+Interface RectHitbox {
+    getRectHitbox()
+}
+Interface RoundHitbox {
+    getRoundHitbox()
+}
+
+Enum Direction {
+    UP
+    DOWN
+    LEFT
+    RIGHT
+    getX()
+    getY()
+}
+
+Enum KeySchema {
+    WASD
+    ARROWS
+    getKeySchema()
+}
+
+RectHitbox -u-|> Hitbox
+RoundHitbox -u-|> Hitbox
+
+Player .u.> Hitbox
+Heavy .u.> RectHitbox
+Speedo .u.> RoundHitbox
+Projectile .u.> RoundHitbox
+PlayerHome .u.> RectHitbox
+HeavyProjectile .u.> RectHitbox
 
 Player -u-|> Entity
 Heavy -u-|> Player
 Speedo -u-|> Player
 Projectile -u-|> Entity
+HeavyProjectile -u-|> Projectile
+
+Player -d-* KeySchema
+Player -d-* Direction
+
+SceneManager -d-* GameCore
 
 abstract class GameCore {
     entityManager
+    update()
+    onresize()
 }
-class Dual
-class Host
-class Guest
-class Invasion
+class Dual {
+    update()
+}
+class Host {
+    update()
+}
+class Guest{
+    update()
+}
+class Invasion{
+    update()
+}
 
 Dual -u-|> GameCore
 Invasion -u-|> GameCore
 Host -u-|> GameCore
 Guest -u-|> GameCore
-Player --* Projectile
+Player -d-* Projectile
 
-GameCore --* Player
+GameCore -d-* Player
+Invasion -d-* PlayerHome
+GameCore -d-* Level
 
 class EntityManager
 
-EntityManager --* Entity
-GameCore --* EntityManager
+EntityManager -d-* Entity
+GameCore -d-* EntityManager
 
 
 }

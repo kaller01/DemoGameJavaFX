@@ -7,7 +7,7 @@ import java.util.List;
 public class EntityManager implements Serializable {
     private List<Entity> entities = new ArrayList<>();
     private HashSet<Entity> entitiesToRemove = new HashSet<>();
-    double WIDTH, HEIGHT;
+    private double WIDTH, HEIGHT;
 
     /**
      * Adds entity to the entityManager. This should only be called from the entity itself

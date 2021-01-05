@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * Type of Player
  */
-public class Speedo extends Player {
+public class Speedo extends Player implements RoundHitbox {
 
 
     /**

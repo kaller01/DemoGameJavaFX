@@ -6,10 +6,10 @@ import javafx.scene.canvas.GraphicsContext;
  * Singleplayer gamemode where you shoot at enemies
  */
 public class Invasion extends GameCore {
-    Player player;
-    double basewidth = WIDTH*0.05;
-    PlayerHome home = new PlayerHome(basewidth, HEIGHT);
-    double counter = 0;
+    private Player player;
+    private double basewidth = WIDTH*0.05;
+    private PlayerHome home = new PlayerHome(basewidth, HEIGHT);
+    private double counter = 0;
 
     /**
      * @param gc
@@ -18,7 +18,7 @@ public class Invasion extends GameCore {
      */
     public Invasion(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
-        level = Level.invasion;
+        level = Level.INVASION;
     }
 
     /**

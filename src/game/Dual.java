@@ -1,7 +1,6 @@
 package game;
 
 import javafx.scene.canvas.GraphicsContext;
-import sounds.SoundEffects;
 
 /**
  * Gamemode where 2 players dual eachother locally on the same computer.
@@ -17,7 +16,7 @@ public class Dual extends GameCore {
      */
     public Dual(GraphicsContext gc, double width, double height) {
         super(gc, width, height);
-        level = Level.dual;
+        level = Level.DUAL;
     }
 
     /**

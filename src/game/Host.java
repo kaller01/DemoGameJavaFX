@@ -8,9 +8,9 @@ import java.util.HashMap;
  * Multiplayer gamemode where this gamemode is the host which is responsible for doing all the computation
  */
 public class Host extends GameCore {
-    Player player1;
-    Player player2;
-    Multiplayer host;
+    private Player player1;
+    private Player player2;
+    private Multiplayer host;
     private HashMap<String, Boolean> currentlyActiveKeys2 = new HashMap<>();
 
     /**
@@ -21,7 +21,7 @@ public class Host extends GameCore {
      */
     public Host(GraphicsContext gc, double width, double height, Multiplayer host) {
         super(gc, width, height);
-        level = Level.dual;
+        level = Level.DUAL;
         this.host = host;
         host.start();
         player2 = new Speedo(WIDTH*0.9, HEIGHT*0.1, Direction.LEFT, KeySchema.WASD);

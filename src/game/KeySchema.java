@@ -8,7 +8,7 @@ import java.util.HashMap;
 public enum KeySchema {
     WASD("W","S","A","D","SPACE"), ARROWS("UP","DOWN","LEFT","RIGHT","NUMPAD0");
 
-    protected HashMap<String, String> keySchema = new HashMap<>();
+    private HashMap<String, String> keySchema = new HashMap<>();
 
      KeySchema(String up, String down, String left, String right, String shoot){
                  keySchema.put("UP", up);

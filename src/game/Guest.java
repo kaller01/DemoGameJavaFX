@@ -10,7 +10,7 @@ import java.util.HashMap;
  * This gamemode only does rendering of EntityManager which is sent from the host
  */
 public class Guest extends GameCore {
-    Multiplayer guest;
+    private Multiplayer guest;
 
     /**
      *
@@ -21,7 +21,7 @@ public class Guest extends GameCore {
      */
     public Guest(GraphicsContext gc, double width, double height, Multiplayer guest) {
         super(gc, width, height);
-        level = Level.dual;
+        level = Level.DUAL;
         guest.start();
         this.guest = guest;
         onResize();

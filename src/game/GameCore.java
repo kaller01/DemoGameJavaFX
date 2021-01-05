@@ -8,12 +8,12 @@ import java.util.HashMap;
  * The games core
  */
 abstract public class GameCore {
-    GraphicsContext gc;
-    double WIDTH, HEIGHT;
-    Level level;
+    protected GraphicsContext gc;
+    protected double WIDTH, HEIGHT;
+    protected Level level;
 
     protected HashMap<String, Boolean> currentlyActiveKeys = new HashMap<>();
-    EntityManager entityManager = new EntityManager();
+    protected EntityManager entityManager = new EntityManager();
 
     /**
      *

@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 
 abstract public class Entity implements Serializable {
-    double x, y, vx, vy, ax, ay, vMax, size, width, height;
+    protected double x, y, vx, vy, ax, ay, vMax, size, width, height;
     protected static double scale = 1;
-    public Double[] border = new Double[4];
+    protected Double[] border = new Double[4];
     protected static GraphicsContext gc;
     protected static EntityManager entityManager;
 
