@@ -35,4 +35,4 @@ Bamk är ett 2d shooter spel som fokuserar på simpla spel mekaniker som gör sp
 	• Polymorfism ✔️
 	ex. Entity.update(), Gamecore.update()
 
-!(https://i.imgur.com/7YLh9Gi.png)[]
+![](https://i.imgur.com/7YLh9Gi.png)
